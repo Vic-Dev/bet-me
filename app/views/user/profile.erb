@@ -1,0 +1,23 @@
+<diiv class="">
+  <div class="" id='profile-left'>
+    <!-- IMAGE GOES HERE -->
+    <h1><%= user.first_name %>'s Profile </h1>
+    <h2>Statistics</h2>
+    <h2>Total Challenges</h2>
+    <h2>Completed Challenges</h2>
+    <h2>Fail Challenges</h2>
+  </div>
+  <div class="" id="profile-right">
+    <h1>Current Challenges</h1>
+        <% @challenges.each do |challenge| %>
+          <div class="challenge-box">
+            <% challenge.title %>
+            <% challenge.wager %>
+            <p><a href="/users/:id/challenges/:id">Click for details</a></p>
+            <% challenge.end_time - challenge.start_time %>
+          </div>
+  </div>
+
+
+
+</div>
