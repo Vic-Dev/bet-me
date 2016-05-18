@@ -1,0 +1,33 @@
+<div class="container">
+  <div class="header clearfix">
+    <nav>
+      <ul class="nav nav-pills pull-right">
+        <li role="presentation">
+          <a href="/">Profile</a>
+        </li>
+        <li role="presentation">
+          <a href="/tracks">Create Challenge</a>
+        </li>
+        <li role="presentation">
+          <a href="/tracks/new">All Challenges</a>
+        </li>
+        <% if session[:user_id].nil? %>
+          <li role="presentation">
+              <a href="/user/login">Log In</a>
+          </li>
+          <li role="presentation">
+              <a href="/user/new">Sign Up</a>
+          </li>
+            <% else %>
+            <li role='presentation'>
+              <a href="/user/logout">Log Out</a>
+            </li>
+          <% end %>
+      </ul>
+    </nav>
+    <h3 class="text-muted">Bet Me</h3>
+  </div>
+  <div class="jumbotron text-center">
+    <h1>PUT SOMETHING HERE</h1>
+  </div>
+<hr/>
