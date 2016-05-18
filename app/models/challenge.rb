@@ -6,4 +6,7 @@ class Challenge < ActiveRecord::Base
   validates :start_time, presence: true
   validates :end_time, presence: true
 
+  has_many :records
+  has_many :users, through: :records
+
 end
