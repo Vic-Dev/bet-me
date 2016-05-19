@@ -1,11 +1,11 @@
-<% @current_challenges.each do |challenge| %>
+<% @expired_challenges.each do |challenge| %>
   <div class="challenge-box">
     <!-- Assumption that time stamps will work as shown
          YYYY/MM/DD-->
     <%= challenge.title %>
     <p>Created by: <%= challenge.user.first_name + ' ' +challenge.user.last_name[0] %></p>
     <%= challenge.wager %>
-    <p><a href="/challenges/<%= challenge.id %>">Click for details</a></p>
-    <% challenge.end_time - challenge.start_time %>
+    <p><a href="/challenges/<=% challenge.id %>">Click for details</a></p>
+    <%= challenge.end_time - challenge.start_time %>
   </div>
 <% end %>
