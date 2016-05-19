@@ -20,6 +20,8 @@ GEM
     bond (0.5.1)
     builder (3.2.2)
     coderay (1.1.1)
+    faker (1.6.3)
+      i18n (~> 0.5)
     i18n (0.7.0)
     json (1.8.3)
     method_source (0.8.2)
@@ -78,6 +80,7 @@ PLATFORMS
 DEPENDENCIES
   activesupport
   bcrypt
+  faker
   pry
   puma
   rake
@@ -89,4 +92,4 @@ DEPENDENCIES
   tux
 
 BUNDLED WITH
-   1.12.1
+   1.12.3
