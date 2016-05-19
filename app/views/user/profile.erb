@@ -9,18 +9,7 @@
   </div>
   <div>
     <h1>Current Challenges</h1>
-        <% @challenges.each do |challenge| %>
-          <div class="challenge-box">
-            <!-- Assumption that time stamps will work as shown
-                 YYYY/MM/DD-->
-            <% if Time.current < challenge.end_time %>
-              <% challenge.title %>
-              <% challenge.wager %>
-              <p><a href="/users/:id/challenges/:id">Click for details</a></p>
-              <% challenge.end_time - challenge.start_time %>
-            <% end %>
-          </div>
-        <% end %>
+    <%= erb :'partials/_current_challenges' %>
     <h1>Past Challenges</h1>
       <% @challenges.each do |challenge| %>
         <div class="challenge-box">
