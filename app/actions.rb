@@ -2,7 +2,7 @@
 enable :sessions
 
 get '/' do
-  erb :'testphoto/show_image'
+  erb :'testphoto/form'
 end
 
 
