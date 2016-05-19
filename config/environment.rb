@@ -8,7 +8,7 @@ require 'sinatra'
 require 'sinatra/activerecord'
 require 'sinatra/contrib/all' # Requires cookies, among other things
 
-require 'factory_girl'
+require 'faker'
 require 'pry'
 
 APP_ROOT = Pathname.new(File.expand_path('../../', __FILE__))
@@ -30,8 +30,3 @@ require APP_ROOT.join('config', 'database')
 
 # Load the routes / actions
 require APP_ROOT.join('app', 'actions')
-
-# FactoryGirl
-FactoryGirl.definition_file_paths = %w(factories)
-FactoryGirl.find_definitions
-# include FactoryGirl::Syntax::Methods
