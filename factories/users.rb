@@ -16,4 +16,27 @@ FactoryGirl.define do
     password "password"
   end
 
+  # factory :challenges do
+
+  #   sequence :title do |n|
+  #     "user#{n} title"
+  #   end
+
+  #   sequence :description do |n|
+  #     "user#{n} description"
+  #   end
+
+  #   sequence :wager do |n|
+  #     "#{n}0"
+  #   end
+
+  #   sequence "start_time" do |n|
+  #     Date.today + n.days
+  #   end
+
+  #   sequence "end_time" do |n|
+  #     Date.today + (2 * n.days)
+  #   end
+  # end
+  
 end
