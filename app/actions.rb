@@ -8,3 +8,25 @@ get '/profile/:id' do
   @challenges = @user.challenges
   erb :'user/profile'
 end
+
+# shows create challenge form
+get '/challenges/create' do
+	@challenge = Challenge.new
+	erb :'challenges/create'
+end
+
+# save new challenge data to db
+post '/challenges/create' do 
+	@challenges = Challenge.new(
+		title: params[:title],
+		description: params[:description],
+		wager: params[:wager],
+		start_time: params[:start_time],
+		end_time: params[:end_time]
+		)
+	redirect "/profile/:id"
+end
+
+
+
+

@@ -5,7 +5,7 @@
     <% if Time.current < challenge.end_time %>
       <% challenge.title %>
       <% challenge.wager %>
-      <p><a href="/users/:id/challenges/:id">Click for details</a></p>
+      <p><a href=<%= "/users/#{@user.id}/challenges/#{challenge.id}" %>>Click for details</a></p>
       <% challenge.end_time - challenge.start_time %>
     <% end %>
   </div>
