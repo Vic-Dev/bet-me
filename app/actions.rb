@@ -1,28 +1,60 @@
 # Homepage (Root path)
 require 'pry'
 
+helpers do
+  def current_user
+    if session.has_key?(:user_session)
+      user = User.find_by_login_token(session[:user_session])
+    else
+      nil
+    end
+  end
+end
+
+def authenticate_user
+  redirect'/user/login' unless current_user
+end
 
 get '/' do
-  redirect '/index'
+  session[:user_session] ||=nil
+  erb :index
 end
 
 get '/index' do
   erb :index
 end
 
-def current_user
+get '/login' do
+  erb :'user/login'
+end
 
-  if cookies.has_key? :remember_me
-    user = User.find_by_remember_token(cookies[:remember_me])
-    return user if user
-  end
+get '/user' do
+  @users = User.all
+  erb :'users/index'
+end
 
-  if session.has_key?(:user_session)
-    user = User.find_by_login_token(session[:user_session])
+get '/user/signup' do
+  @user = User.new
+  erb :'users/signup'
+end
+
+post '/users/signup' do
+  @user = User.new(
+    first_name: params[:first_name],
+    last_name: params[:last_name],
+    email: params[:email],
+    password: params[:password]
+    )
+  if @user.save
+    redirect '/users/login'
   else
-    nil
+    redirect'/index'
   end
 end
+
+
+
+
 
 get '/user/profile' do
   if current_user
@@ -32,31 +64,10 @@ get '/user/profile' do
   end
 end
 
-post '/session' do
-  @user = User.find_by_email(params[:email])
-  if @user && @user.authenticate(params[:password])
-    session[:user_session] = SecureRandom.hex
-    @user.login_token = session[:user_session]
-
-    if params.has_key?('remember_me') && params[:remember_me] == 'true'
-
-      if @user.remember_token
-        response.set_cookie :remember_me, {value: @user.remember_token, max_age: "2592000" }
-      else
-        response.set_cookie :remember_me, {value: SecureRandom.hex, max_age: "2592000" }
-        @user.remember_token = cookies[:remember_me]
-      end
-    end
-
-    @user.save
-    redirect '/user/profile'
-  else
-    erb :login
-  end
-
 
 get '/profile/:id' do
   @user = User.find(params[:id])
   @challenges = @user.challenges
   erb :'user/profile'
+end
 end
