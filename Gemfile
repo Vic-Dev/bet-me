@@ -13,6 +13,8 @@ gem 'tux'
 
 gem 'bcrypt'
 
+gem 'factory_girl'
+
 group :development, :test do
   gem 'pry'
   gem 'shotgun'
