@@ -13,18 +13,9 @@
             <a href="/challenges">All Challenges</a>
           </li>
         <% end %>
-        <% if session[:user_id].nil? %>
-          <li role="presentation">
-              <a href="/user/login">Log In</a>
-          </li>
-          <li role="presentation">
-              <a href="/">Sign Up</a>
-          </li>
-            <% else %>
-            <li role='presentation'>
-              <a href="/user/logout">Log Out</a>
-            </li>
-          <% end %>
+        <li role='presentation'>
+          <a href="/user/logout">Log Out</a>
+        </li>
       </ul>
       <h3 class="text-muted">Bet Me</h3>
     </nav>
