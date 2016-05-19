@@ -13,6 +13,8 @@ gem 'tux'
 
 gem 'bcrypt'
 
+gem 'faker'
+
 group :development, :test do
   gem 'pry'
   gem 'shotgun'

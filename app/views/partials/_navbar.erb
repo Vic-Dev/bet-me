@@ -2,15 +2,17 @@
   <div class="header clearfix">
     <nav>
       <ul class="nav nav-pills pull-right">
-        <li role="presentation">
-          <a href="/">Profile</a>
-        </li>
-        <li role="presentation">
-          <a href="/tracks">Create Challenge</a>
-        </li>
-        <li role="presentation">
-          <a href="/tracks/new">All Challenges</a>
-        </li>
+        <% if session[:user_id] %>
+          <li role="presentation">
+            <a href="/">Profile</a>
+          </li>
+          <li role="presentation">
+            <a href="/tracks">Create Challenge</a>
+          </li>
+          <li role="presentation">
+            <a href="/tracks/new">All Challenges</a>
+          </li>
+        <% end %>
         <% if session[:user_id].nil? %>
           <li role="presentation">
               <a href="/user/login">Log In</a>
@@ -24,7 +26,7 @@
             </li>
           <% end %>
       </ul>
+      <h3 class="text-muted">Bet Me</h3>
     </nav>
-    <h3 class="text-muted">Bet Me</h3>
   </div>
 <hr/>
