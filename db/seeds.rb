@@ -25,17 +25,55 @@ end
   )
 end
 
+def create_voters(n, start_id, challenge_id_given, is_completed=true)
+  n.times do |x|
+    challenge_id = challenge_id_given
+    user_id =  x + start_id
+    role = "voter"
+    vote_result = is_completed ? Faker::Boolean.boolean : nil 
+    Record.create(
+      challenge_id: challenge_id,
+      user_id: user_id,
+      role: role,
+      vote_result: vote_result
+      )
+  end
+end
 
-# 4.times do |n|
-#   challenge_id = 1
-#   user_id =  n + 1
-#   role = "voter"
-#   Record.create(
-#     challenge_id: challenge_id,
-#     user_id: user_id,
-#     role: role,
-#     vote_result: Faker::Boolean.boolean
-#   )
-# end
+create_voters(4, 1, 1)
 
-# Record.create(challenge_id: 1, user_id: 5, role: "creator", is_active: true, is_completed: true)
+Record.create(challenge_id: 1, user_id: 5, role: "creator", is_active: true, is_completed: true)
+
+create_voters(3, 6, 2, false)
+
+Record.create(challenge_id: 2, user_id: 2, role: "creator", is_active: true, is_completed: false)
+
+create_voters(2, 5, 3, false)
+
+Record.create(challenge_id: 3, user_id: 1, role: "creator", is_active: true, is_completed: false)
+
+Record.create(challenge_id: 4, user_id: 1, role: "creator", is_active: true, is_completed: false)
+
+create_voters(5, 5, 5)
+
+Record.create(challenge_id: 5, user_id: 1, role: "creator", is_active: false, is_completed: true)
+
+create_voters(1, 2, 6)
+
+Record.create(challenge_id: 6, user_id: 1, role: "creator", is_active: false, is_completed: true)
+
+create_voters(2, 2, 7, false)
+
+Record.create(challenge_id: 7, user_id: 1, role: "creator", is_active: true, is_completed: false)
+
+create_voters(3, 3, 8)
+
+Record.create(challenge_id: 8, user_id: 2, role: "creator", is_active: false, is_completed: true)
+
+create_voters(2, 5, 9, false)
+
+Record.create(challenge_id: 9, user_id: 2, role: "creator", is_active: true, is_completed: false)
+
+create_voters(3, 1, 10, false)
+
+Record.create(challenge_id: 10, user_id: 6, role: "creator", is_active: true, is_completed: false)
