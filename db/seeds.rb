@@ -42,7 +42,7 @@ end
 
 create_voters(4, 1, 1)
 
-Record.create(challenge_id: 1, user_id: 5, role: "creator", is_active: true, is_completed: true)
+Record.create(challenge_id: 1, user_id: 5, role: "creator", is_active: false, is_completed: true)
 
 create_voters(3, 6, 2, false)
 
