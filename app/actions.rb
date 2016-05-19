@@ -1,6 +1,11 @@
 # Homepage (Root path)
 enable :sessions
 
+get '/' do
+  erb :'testphoto/show_image'
+end
+
+
 get '/user/profile' do
 
 end
@@ -36,6 +41,15 @@ get '/challenges/:id' do
   erb :'challenges/profile'
 end
 
-def doit
-  puts "hello"
+#proof photo
+post '/save_image' do
+
+  @filename = params[:file][:filename]
+  file = params[:file][:tempfile]
+
+  File.open("./public/#{@filename}", 'wb') do |f|
+    f.write(file.read)
+  end
+
+  erb :'testphoto/show_image'
 end
