@@ -14,6 +14,7 @@ gem 'tux'
 gem 'bcrypt'
 
 gem 'factory_girl'
+gem 'faker'
 
 group :development, :test do
   gem 'pry'
