@@ -10,5 +10,3 @@ class Challenge < ActiveRecord::Base
   has_many :users, through: :records
 
 end
-
-Challenge.create(title: 'test', description: 'testing desc', wager: 100, )
