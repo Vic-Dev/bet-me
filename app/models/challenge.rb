@@ -22,5 +22,3 @@ class Challenge < ActiveRecord::Base
     User.find(record.user_id)
   end
 end
-
-Challenge.create(title: 'test', description: 'testing desc', wager: 100, )

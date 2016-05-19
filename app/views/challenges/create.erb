@@ -1,0 +1,33 @@
+<h2>Create A Challenge</h2>
+
+<form method="post" action="/challenges">
+	
+	<div>`1
+		<label>Title</label>
+		<input type="text" name="title" placeholder='Challenge Title' value="<%=@challenge.title %>">
+	</div>
+
+	<div>
+		<label>Description</label>
+		<input type="text" name="description" placeholder='Description' value="<%=@challenge.description %>">
+	</div>
+
+	<div>
+		<label>Wager</label>
+		<input type="text" name="wager" placeholder='Challenge Wager' value="<%=@challenge.wager%>">
+	</div>
+
+	<div>
+		<label>Start Date</label>
+		<input type="text" name="start_date" placeholder='Challenge Start Date' value="<%= @challenge.start_time %>">
+	</div>
+
+	<div>
+		<label>End Date</label>
+		<input type="text" name="end_date" placeholder='Challenge End Date' value="<%=@challenge.end_time %>">
+	</div>
+
+	<div>
+    <button type="submit">Submit</button>
+  </div>
+</form>

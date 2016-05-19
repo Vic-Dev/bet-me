@@ -4,6 +4,7 @@ Sinatra
 ## Getting Started
 
 1. `bundle install`
+2. `bundle exec rake db:drop`
 2. `bundle exec rake db:create`
 3. `bundle exec rake db:migrate`
 4. `bundle exec rake db:seed`
