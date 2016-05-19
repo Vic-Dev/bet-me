@@ -24,9 +24,6 @@ get '/index' do
   erb :index
 end
 
-get '/login' do
-  erb :'user/login'
-end
 
 get '/user' do
   @users = User.all
@@ -38,7 +35,7 @@ get '/user/signup' do
   erb :'users/signup'
 end
 
-post '/users/signup' do
+post '/user/signup' do
   @user = User.new(
     first_name: params[:first_name],
     last_name: params[:last_name],
@@ -46,15 +43,26 @@ post '/users/signup' do
     password: params[:password]
     )
   if @user.save
-    redirect '/users/login'
+    redirect '/user/profile'
   else
     redirect'/index'
   end
 end
 
+post '/user/login' do
+  @user = User.find_by_email(params[:email])
+  if @user && @user.authenticate(params[:password])
+    session[:user_session] = SecureRandom.hex
+    @user.login_token = session[:user_session]
+    @user.save
 
+    # redirect '/user/profile/'
+    erb :index
 
-
+  else
+    erb :index
+  end
+end
 
 get '/user/profile' do
   if current_user
@@ -64,10 +72,14 @@ get '/user/profile' do
   end
 end
 
+post '/user/logout' do
+  session.clear
+  erb :index
+end
+
 
 get '/profile/:id' do
   @user = User.find(params[:id])
   @challenges = @user.challenges
   erb :'user/profile'
-end
 end
