@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160519233815) do
+ActiveRecord::Schema.define(version: 20160520210009) do
 
   create_table "challenges", force: :cascade do |t|
     t.string   "title"
@@ -19,16 +19,11 @@ ActiveRecord::Schema.define(version: 20160519233815) do
     t.decimal  "wager"
     t.datetime "start_time"
     t.datetime "end_time"
+    t.integer  "user_id"
+    t.boolean  "challenge_completed", default: false
   end
 
-  create_table "records", force: :cascade do |t|
-    t.integer "challenge_id"
-    t.integer "user_id"
-    t.string  "role"
-    t.boolean "accepted_invite"
-    t.boolean "challenge_completed"
-    t.boolean "vote_result"
-  end
+  add_index "challenges", ["user_id"], name: "index_challenges_on_user_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "email"
@@ -38,6 +33,13 @@ ActiveRecord::Schema.define(version: 20160519233815) do
     t.string   "login_token"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "voters", force: :cascade do |t|
+    t.integer "challenge_id"
+    t.integer "user_id"
+    t.boolean "accepted_invite"
+    t.boolean "vote"
   end
 
 end
