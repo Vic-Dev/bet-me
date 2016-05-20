@@ -19,7 +19,6 @@ def authenticate_user
     true
   else
     redirect '/user/login'
-  # return current_user ? true : redirect '/user/login'
   end
 end
 
@@ -74,9 +73,7 @@ post '/user/login' do
     session[:user_session] = SecureRandom.hex
     @user.login_token = session[:user_session]
     @user.save
-    # redirect '/user/profile/'
-    erb :index
-
+    redirect '/user/profile/'
   else
     erb :index
   end
@@ -92,6 +89,7 @@ end
 # Users
 #=====================
 get '/user/profile' do
+  binding.pry
   @current_challenges = Challenge.where("end_time > ?", Time.current)
   @expired_challenges = Challenge.where("start_time < ?", Time.current)
   @user = current_user
@@ -101,12 +99,6 @@ get '/user/profile' do
     redirect '/index'
   end
 end
-
-# get '/profile/:id' do
-#   @user = User.find(params[:id])
-#   @challenges = @user.challenges
-#   erb :'user/profile'
-# end
 
 get '/user/profile/:id' do
   @current_challenges = Challenge.where("end_time > ?", Time.current)
