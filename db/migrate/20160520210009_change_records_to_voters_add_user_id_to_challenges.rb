@@ -9,6 +9,6 @@ class ChangeRecordsToVotersAddUserIdToChallenges < ActiveRecord::Migration
     rename_table :records, :voters
 
     add_reference :challenges, :user, index: true
-    add_column :challenges, :challenge_completed, :boolean, default: false
+    add_column :challenges, :complete, :boolean, default: false
   end
 end
