@@ -21,7 +21,6 @@ def authenticate_user
     true
   else
     redirect '/user/login'
-  # return current_user ? true : redirect '/user/login'
   end
 end
 
@@ -32,21 +31,6 @@ end
 
 get '/index' do
   erb :index
-end
-
-
-# STRETCH: creators can edit challenge
-
-# get '/challenges/:id/edit' do
-# 	@user = current_user
-# 	@challenge = Challenge.find(params[:id])
-# 	erb :'challenges/new'
-# end
-
-
-get '/user' do
-  @users = User.all
-  erb :'users/index'
 end
 
 
@@ -92,9 +76,7 @@ post '/user/login' do
     session[:user_session] = SecureRandom.hex
     @user.login_token = session[:user_session]
     @user.save
-    # redirect '/user/profile/'
-    authenticate_user
-    erb :index
+    redirect '/user/profile'
   else
     erb :index
   end
@@ -122,11 +104,6 @@ get '/user/profile' do
   end
 end
 
-# get '/profile/:id' do
-#   @user = User.find(params[:id])
-#   @challenges = @user.challenges
-#   erb :'user/profile'
-# end
 
 get '/user/profile/:id' do
   @current_challenges = Challenge.where("end_time > ?", Time.current)
@@ -181,20 +158,27 @@ get '/challenges' do
   erb :'challenges/index'
 end
 
-# TODO: /challenges/:id page
-
 
 get '/challenges/:id' do
   @user = current_user
   @is_creator = Record.where("role = ? AND user_id = ?",'creator',@user.id)
   @is_voter = Record.where("role = ? AND user_id = ?",'voter',@user.id)
   @challenge = Challenge.find(params[:id])
-  #@voter_result is number of TRUE votes
+
+  # @voter_result is number of TRUE votes
   @true_votes = @challenge.users.where('vote_result = ?',true).count(:vote_result)
-  #subtract the creator becasue he cannot vote
+
+  # subtract the creator becasue he cannot vote
   @total_voters = @challenge.users.length - 1
   @post_vote_result = (@true_votes >= @total_voters/2) ? true : false
   erb :'challenges/profile'
 end
 
+# STRETCH: creators can edit challenge
+
+# get '/challenges/:id/edit' do
+#   @user = current_user
+#   @challenge = Challenge.find(params[:id])
+#   erb :'challenges/new'
+# end
 
