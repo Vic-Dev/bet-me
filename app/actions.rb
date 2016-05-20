@@ -92,7 +92,10 @@ end
 # Users
 #=====================
 get '/user/profile' do
-  if current_user
+  @current_challenges = Challenge.where("end_time > ?", Time.current)
+  @expired_challenges = Challenge.where("start_time < ?", Time.current)
+  @user = current_user
+  if current_user.login_token == session[:user_session]
     binding.pry
     erb :'user/profile'
   else
