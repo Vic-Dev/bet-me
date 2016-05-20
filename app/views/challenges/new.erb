@@ -1,9 +1,5 @@
 <h2>Create A Challenge</h2>
 
-<!-- Include Date Range Picker -->
-<script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
-<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
-
 <form class="form-horizontal" method="post" action="/challenges/create">
   <div class="form-group">
     <label for="create-title" class="col-sm-2 control-label">Choose a title for your challenge</label>
@@ -29,29 +25,26 @@
   <div class="form-group">
     <label for="input-start-and-end-date" class="col-sm-2 control-label">Choose a Start and End date</label>
     <div class="col-sm-6">
-      <input type="text" name="daterange" value="01/01/2015 1:30 PM - 01/01/2015 2:00 PM" />
+      <input type="text" name="daterange" />
     </div>
   </div>
 
-  <div class="form-group">
-    <label for="inputEmail3" class="col-sm-2 control-label">Invite Friends</label>
-    <div class="col-sm-6">
-    	<%User.all.each do |user|%>
-				<p class="form-control"><a><%= user.first_name %></a></p>
-			<%end%>
-    </div>
+  <div>
+    <label for="friends" class="col-sm-2 control-label">Invite Friends</label>
+    <select class="selectpicker" data-live-search="true" multiple>
+      <% User.all.each do |user| %>
+        <option data-tokens="<%= user.first_name %> <%= user.last_name %>" name="<%= user.email %>"><%= user.first_name %> <%= user.last_name %></option>
+      <% end %>
+    </select>
   </div>
 
 	<div class>
     <button type="submit">Submit</button>
   </div>
+
 </form>
 
 
 
 
-  
-  
-  
-  
 

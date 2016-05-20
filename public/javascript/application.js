@@ -1,26 +1,15 @@
-// $(document).ready(function() {
-//   $(function() {
-//     $('date-picker').daterangepicker({
-//         singleDatePicker: true,
-//         showDropdowns: true
-//     }, 
-//     function(start, end, label) {});
-//     });
-//   $(function() {
-//     $('date-picker').daterangepicker({
-//         singleDatePicker: true,
-//         showDropdowns: true
-//     }, 
-//     function(start, end, label) {});
-//     });
-// });
- 
 $(document).ready(function() {
     $('input[name="daterange"]').daterangepicker({
         timePicker: true,
         timePickerIncrement: 1,
         locale: {
-            format: 'MM/DD/YYYY h:mm A'
+            format: 'YYYY/MM/DD HH:mm',
+            use24hours: true
         }
     });
+    $('.selectpicker').selectpicker({
+      style: 'btn-info',
+      size: 4
+  });
 });
+
