@@ -27,11 +27,9 @@ get '/index' do
   erb :index
 end
 
-
-get '/user' do
-  @users = User.all
-  erb :'users/index'
-end
+#=========================
+# Login, signup and logout
+#=========================
 
 get '/user/signup' do
   @user = User.new
@@ -46,6 +44,12 @@ post '/user/signup' do
     password: params[:password]
     )
   if @user.save
+    @filename = "#{@user.id}_profile_photo"
+    file = params[:file][:tempfile]
+    File.open("./public/#{@filename}", 'wb') do |f|
+      f.write(file.read)
+    end
+    authenticate_user
     redirect '/user/profile'
   else
     redirect'/index'
@@ -58,7 +62,6 @@ post '/user/login' do
     session[:user_session] = SecureRandom.hex
     @user.login_token = session[:user_session]
     @user.save
-
     # redirect '/user/profile/'
     erb :index
 
@@ -67,6 +70,15 @@ post '/user/login' do
   end
 end
 
+
+post '/user/logout' do
+  session.clear
+  erb :index
+end
+
+#=====================
+# Users
+#=====================
 get '/user/profile' do
   if current_user
     erb :'profile'
@@ -75,14 +87,39 @@ get '/user/profile' do
   end
 end
 
-post '/user/logout' do
-  session.clear
-  erb :index
+# get '/profile/:id' do
+#   @user = User.find(params[:id])
+#   @challenges = @user.challenges
+#   erb :'user/profile'
+# end
+
+get '/user/profile/:id' do
+  @current_challenges = Challenge.where("end_time > ?", Time.current)
+  @expired_challenges = Challenge.where("start_time < ?", Time.current)
+  @user = User.find(params[:id])
+  @challenges = @user.challenges.order(end_time: :desc)
+  erb :'user/profile'
 end
 
+#============
+# challenges
+#============
 
-get '/profile/:id' do
-  @user = User.find(params[:id])
-  @challenges = @user.challenges
-  erb :'user/profile'
+get '/challenges' do
+  @current_challenges = Challenge.where("end_time > ?", Time.current)
+  @expired_challenges = Challenge.where("start_time < ?", Time.current)
+  erb :'challenges/index'
+end
+
+get '/challenges/:id' do
+  @user = current_user
+  @is_creator = Record.where("role = ? AND user_id = ?",'creator',@user.id)
+  @is_voter = Record.where("role = ? AND user_id = ?",'voter',@user.id)
+  @challenge = Challenge.find(params[:id])
+  #@voter_result is number of TRUE votes
+  @true_votes = @challenge.users.where('vote_result = ?',true).count(:vote_result)
+  #subtract the creator becasue he cannot vote
+  @total_voters = @challenge.users.length - 1
+  @post_vote_result = (@true_votes >= @total_voters/2) ? true : false
+  erb :'challenges/profile'
 end
