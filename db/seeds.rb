@@ -32,12 +32,21 @@ def create_voters(n, start_id, challenge_id_given, is_completed=true)
     challenge_id = challenge_id_given
     user_id =  x + start_id
     role = "voter"
-    vote_result = is_completed ? Faker::Boolean.boolean : nil
+    is_active = true
+    vote_result = is_completed ? Faker::Boolean.boolean : nil 
+    record = Record.where('challenge_id = ? AND role = ?', challenge_id_given, "creator").take
+    if record[:is_completed]
+      is_completed = true
+    else
+      is_completed = false
+    end
     Record.create(
       challenge_id: challenge_id,
       user_id: user_id,
       role: role,
-      vote_result: vote_result
+      vote_result: vote_result,
+      is_active: is_active,
+      is_completed: is_completed
       )
   end
 end

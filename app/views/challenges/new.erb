@@ -1,0 +1,57 @@
+<h2>Create A Challenge</h2>
+
+<!-- Include Date Range Picker -->
+<script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+
+<form class="form-horizontal" method="post" action="/challenges/create">
+  <div class="form-group">
+    <label for="create-title" class="col-sm-2 control-label">Choose a title for your challenge</label>
+    <div class="col-sm-6">
+      <input type="text" class="form-control" id="create-title" name="title" placeholder="Challenge Title" value="<%= @challenge.title %>">
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <label for="create-description" class="col-sm-2 control-label">Describe your challenge</label>
+    <div class="col-sm-6">
+    	<textarea id="create-description" name="description" type="text" class="form-control" rows="3" placeholder="Description" value="<%= @challenge.description %>"></textarea>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="input-wager" class="col-sm-2 control-label">Wager</label>
+    <div class="col-sm-6">
+      <input type="text" class="form-control" id="input-wager" name="wager" placeholder="Challenge Wager" value="<%= @challenge.wager %>">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="input-start-and-end-date" class="col-sm-2 control-label">Choose a Start and End date</label>
+    <div class="col-sm-6">
+      <input type="text" name="daterange" value="01/01/2015 1:30 PM - 01/01/2015 2:00 PM" />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="inputEmail3" class="col-sm-2 control-label">Invite Friends</label>
+    <div class="col-sm-6">
+    	<%User.all.each do |user|%>
+				<p class="form-control"><a><%= user.first_name %></a></p>
+			<%end%>
+    </div>
+  </div>
+
+	<div class>
+    <button type="submit">Submit</button>
+  </div>
+</form>
+
+
+
+
+  
+  
+  
+  
+
