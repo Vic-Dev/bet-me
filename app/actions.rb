@@ -132,6 +132,7 @@ post '/challenges/create' do
   authenticate_user
   date_range = params[:daterange]
   capture_dates = /(.*) - (.*)/.match(date_range)
+  binding.pry
   start_time = DateTime.parse(capture_dates[1])
   end_time = DateTime.parse(capture_dates[2])
   @challenge = Challenge.new(
