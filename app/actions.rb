@@ -62,6 +62,7 @@ post '/user/login' do
     @user.save
 
     # redirect '/user/profile/'
+    authenticate_user
     erb :index
 
   else
