@@ -1,4 +1,17 @@
 $(document).ready(function() {
-
-  // See: http://docs.jquery.com/Tutorials:Introducing_$(document).ready()
+  $(function() {
+    $('date-picker').daterangepicker({
+        singleDatePicker: true,
+        showDropdowns: true
+    }, 
+    function(start, end, label) {
+    });
+});$(function() {
+    $('date-picker').daterangepicker({
+        singleDatePicker: true,
+        showDropdowns: true
+    }, 
+    function(start, end, label) {
+    });
+});
 });
