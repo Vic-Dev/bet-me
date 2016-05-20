@@ -95,7 +95,8 @@ end
 #=====================
 
 get '/user/profile' do
-  @current_challenges = Challenge.where("end_time > ?", Time.current)
+  @current_challenges_creator = Challenge.where("end_time > ?", Time.current)
+  @current_challenges_voter = nil
   @expired_challenges = Challenge.where("start_time < ?", Time.current)
   @user = current_user
   @all_challenges_created = Record.where("user_id = ? AND role = ?", current_user.id, "creator").count
@@ -109,7 +110,8 @@ get '/user/profile' do
 end
 
 get '/user/profile/:id' do
-  @current_challenges = Challenge.where("end_time > ?", Time.current)
+  @current_challenges_creator = current_user.records.where("role = ?",'creator')
+  @current_challenges_voter = nil
   @expired_challenges = Challenge.where("start_time < ?", Time.current)
   @user = User.find(params[:id])
   @challenges = @user.challenges.order(end_time: :desc)
@@ -159,7 +161,8 @@ end
 
 
 get '/challenges' do
-  @current_challenges = Challenge.where("end_time > ?", Time.current)
+  @current_challenges_creator = Challenge.where("end_time > ?", Time.current)
+  @current_challenges_voter = nil
   @expired_challenges = Challenge.where("start_time < ?", Time.current)
   erb :'challenges/index'
 end
