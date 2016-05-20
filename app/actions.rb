@@ -29,10 +29,46 @@ get '/index' do
   erb :index
 end
 
+get '/challenges/new' do
+	@user = current_user
+	@challenge = Challenge.new
+	erb :'challenges/new'
+end
+
+# get '/challenges/:id/edit' do
+# 	@user = current_user
+# 	@challenge = Challenge.find(params[:id])
+# 	erb :'challenges/new'
+# end
 
 get '/user' do
   @users = User.all
   erb :'users/index'
+end
+
+# save new challenge data to db
+post '/challenges/create' do 
+	# authenticate_user
+	new_friend = params[:invite_friend]
+	@challenge = Challenge.new(
+		title: params[:title],
+		description: params[:description],
+		wager: params[:wager],
+		start_time: params[:start_time],
+		end_time: params[:end_time]
+		)
+	if @challenge.save
+		@record = Record.new(
+		challenge_id: @challenge.id,
+		user_id: 1,
+		role: "creator",
+		accepted_invite: true,
+		challenge_completed: false
+		)
+		@record.save
+	else
+		erb :'/challenges/new'
+	end
 end
 
 get '/user/signup' do
@@ -64,7 +100,6 @@ post '/user/login' do
     # redirect '/user/profile/'
     authenticate_user
     erb :index
-
   else
     erb :index
   end
@@ -103,7 +138,7 @@ end
 
 get '/challenges/:id' do
   @user = current_user
-  @is_creator = Record.where("role = ? AND user_id = ?",'creator',@user.id)
+  @is_creator = Record.where("role = ? AND user_id = ?", 'creator', @user.id)
   @is_voter = Record.where("role = ? AND user_id = ?",'voter',@user.id)
   @challenge = Challenge.find(params[:id])
   #@voter_result is number of TRUE votes
@@ -112,8 +147,4 @@ get '/challenges/:id' do
   @total_voters = @challenge.users.length - 1
   @post_vote_result = (@true_votes >= @total_voters/2) ? true : false
   erb :'challenges/profile'
-end
-
-def doit
-  puts "hello"
 end
