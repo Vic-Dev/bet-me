@@ -50,6 +50,9 @@ end
 post '/challenges/create' do 
 	# authenticate_user
 	new_friend = params[:invite_friend]
+  start_time = params[:start_time]
+  end_time = params[:end_time]
+  binding.pry
 	@challenge = Challenge.new(
 		title: params[:title],
 		description: params[:description],
@@ -60,7 +63,7 @@ post '/challenges/create' do
 	if @challenge.save
 		@record = Record.new(
 		challenge_id: @challenge.id,
-		user_id: 1,
+		user_id: current_user.id,
 		role: "creator",
 		accepted_invite: true,
 		challenge_completed: false
