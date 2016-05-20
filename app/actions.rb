@@ -35,31 +35,36 @@ get '/challenges/new' do
 	erb :'challenges/new'
 end
 
+
+# STRETCH: creators can edit challenge
+
 # get '/challenges/:id/edit' do
 # 	@user = current_user
 # 	@challenge = Challenge.find(params[:id])
 # 	erb :'challenges/new'
 # end
 
+
 get '/user' do
   @users = User.all
   erb :'users/index'
 end
 
+
 # save new challenge data to db
+# TODO: add voters to challenge, and create records for voters
 post '/challenges/create' do 
-	# authenticate_user
-	new_friend = params[:invite_friend]
-  start_time = params[:start_time]
-  end_time = params[:end_time]
-  binding.pry
+	authenticate_user
+  start_date = Date.parse(params[:start_date]).to_date
+  end_date = Date.parse(params[:end_date]).to_date
 	@challenge = Challenge.new(
 		title: params[:title],
 		description: params[:description],
 		wager: params[:wager],
-		start_time: params[:start_time],
-		end_time: params[:end_time]
+		start_time: start_date,
+		end_time: end_date
 		)
+  @challenge.save
 	if @challenge.save
 		@record = Record.new(
 		challenge_id: @challenge.id,
@@ -139,15 +144,15 @@ get '/challenges' do
   erb :'challenges/index'
 end
 
-get '/challenges/:id' do
-  @user = current_user
-  @is_creator = Record.where("role = ? AND user_id = ?", 'creator', @user.id)
-  @is_voter = Record.where("role = ? AND user_id = ?",'voter',@user.id)
-  @challenge = Challenge.find(params[:id])
-  #@voter_result is number of TRUE votes
-  @true_votes = @challenge.users.where('vote_result = ?',true).count(:vote_result)
-  #subtract the creator becasue he cannot vote
-  @total_voters = @challenge.users.length - 1
-  @post_vote_result = (@true_votes >= @total_voters/2) ? true : false
-  erb :'challenges/profile'
-end
+# get '/challenges/:id' do
+#   @user = current_user
+#   @is_creator = Record.where("role = ? AND user_id = ?", 'creator', @user.id)
+#   @is_voter = Record.where("role = ? AND user_id = ?",'voter',@user.id)
+#   # @challenge = Challenge.find(params[:id])
+#   #@voter_result is number of TRUE votes
+#   @true_votes = @challenge.users.where('vote_result = ?',true).count(:vote_result)
+#   #subtract the creator becasue he cannot vote
+#   @total_voters = @challenge.users.length - 1
+#   @post_vote_result = (@true_votes >= @total_voters/2) ? true : false
+#   erb :'challenges/profile'
+# end
