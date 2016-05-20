@@ -130,14 +130,16 @@ end
 # TODO: add voters to challenge, and create records for voters
 post '/challenges/create' do
   authenticate_user
-  start_date = Date.parse(params[:start_date]).to_date
-  end_date = Date.parse(params[:end_date]).to_date
+  date_range = params[:daterange]
+  capture_dates = /(.*) - (.*)/.match(date_range)
+  start_time = DateTime.parse(capture_dates[1])
+  end_time = DateTime.parse(capture_dates[2])
   @challenge = Challenge.new(
     title: params[:title],
     description: params[:description],
     wager: params[:wager],
-    start_time: start_date,
-    end_time: end_date
+    start_time: start_time,
+    end_time: end_time
     )
   @challenge.save
   if @challenge.save
