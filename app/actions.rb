@@ -96,7 +96,6 @@ get '/user/profile' do
   @expired_challenges = Challenge.where("start_time < ?", Time.current)
   @user = current_user
   if current_user.login_token == session[:user_session]
-    binding.pry
     erb :'user/profile'
   else
     redirect '/index'
