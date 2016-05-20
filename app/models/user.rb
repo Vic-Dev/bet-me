@@ -4,8 +4,8 @@ class User < ActiveRecord::Base
   validates :first_name, presence: true
   validates :last_name, presence: true
 
-  has_many :records
-  has_many :challenges, through: :records
+  has_many :voters
+  has_many :challenges, through: :voters
 
   has_secure_password
 
