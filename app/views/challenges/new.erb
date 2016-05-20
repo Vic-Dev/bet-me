@@ -8,7 +8,7 @@
 <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
 <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
 
-<form class="form-horizontal" method="post" action="/challenges">
+<form class="form-horizontal" method="post" action="/challenges/create">
   <div class="form-group">
     <label for="inputEmail3" class="col-sm-2 control-label">Title</label>
     <div class="col-sm-6">
@@ -30,7 +30,7 @@
     </div>
   </div>
 
-  <div class="form-group">
+<!--   <div class="form-group">
     <label for="inputEmail3" class="col-sm-2 control-label">Start Date</label>
     <div class="col-sm-6">
       <input type="date" class="form-control date-picker" id="inputEmail3" name="start_date" placeholder="Start Date" value="<%=@challenge.start_time %>">
@@ -52,7 +52,7 @@
 				<p class="form-control"><a><%= user.first_name %></a></p>
 			<%end%>
     </div>
-  </div>
+  </div> -->
 
 	<div class>
     <button type="submit">Submit</button>
