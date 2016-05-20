@@ -15,7 +15,12 @@ helpers do
 end
 
 def authenticate_user
-  redirect'/user/login' unless current_user
+  if current_user
+    true
+  else
+    redirect '/user/login'
+  # return current_user ? true : redirect '/user/login'
+  end
 end
 
 get '/' do
@@ -43,6 +48,9 @@ post '/user/signup' do
     email: params[:email],
     password: params[:password]
     )
+  session[:user_session] = SecureRandom.hex
+  @user.login_token = session[:user_session]
+  @user.save
   if @user.save
     @filename = "#{@user.id}_profile_photo"
     file = params[:file][:tempfile]
@@ -54,6 +62,10 @@ post '/user/signup' do
   else
     redirect'/index'
   end
+end
+
+get '/user/login' do
+
 end
 
 post '/user/login' do
@@ -71,7 +83,7 @@ post '/user/login' do
 end
 
 
-post '/user/logout' do
+get '/user/logout' do
   session.clear
   erb :index
 end
@@ -81,7 +93,8 @@ end
 #=====================
 get '/user/profile' do
   if current_user
-    erb :'profile'
+    binding.pry
+    erb :'user/profile'
   else
     redirect '/index'
   end
