@@ -1,3 +1,6 @@
+#TODO fix records that are COMPLETED - the time is in the future LOL
+
+
 10.times do
   email = Faker::Internet.email
   first_name = Faker::Name.first_name
@@ -24,18 +27,37 @@ end
     end_time: end_time
   )
 end
+# 
+# Challenge.create(
+# title: Faker::Book.title,
+# description: Faker::Hipster.paragraph,
+# wager: Faker::Number.between(10,500),
+# start_time: Faker::Time.between(Date.today - 20, Date.today - 10),
+# end_time: Faker::Time.between(Date.today - 5, Date.today - 2)
+# )
+#
+# Record.create(challenge_id: 11, user_id: 5, role: "creator", is_active: false, is_completed: true)
 
 def create_voters(n, start_id, challenge_id_given, is_completed=true)
   n.times do |x|
     challenge_id = challenge_id_given
     user_id =  x + start_id
     role = "voter"
+    is_active = true
     vote_result = is_completed ? Faker::Boolean.boolean : nil 
+    record = Record.where('challenge_id = ? AND role = ?', challenge_id_given, "creator").take
+    if record[:is_completed]
+      is_completed = true
+    else
+      is_completed = false
+    end
     Record.create(
       challenge_id: challenge_id,
       user_id: user_id,
       role: role,
-      vote_result: vote_result
+      vote_result: vote_result,
+      is_active: is_active,
+      is_completed: is_completed
       )
   end
 end

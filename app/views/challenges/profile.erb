@@ -1,0 +1,23 @@
+<div>
+  <div>
+    <h1><%= @challenge.title %></h1>
+    <div>
+      <p>Created by:</p>
+      <h3>@challeng.users</h3>
+      <!-- use profile photo img -->
+    </div>
+  </div>
+  <div>
+    <h1>Bet: <%= @challenge.wager %></h1>
+    <h1>Time left: <%= Time.current - @challenge.end_time %></h1>
+  </div>
+  <div>
+    <% if Time.current > @challenge.end_time && @is_creator %>
+      <div>
+      <!-- prompt user for photo of proof -->
+      <% end %>
+    <% elsif Time.current > @challenge.end_time && @is_voter %>
+      
+  </div>
+    <h1>Description:</h1>
+    <p><%= @challenge.description %></p>

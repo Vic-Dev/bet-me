@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160518223651) do
+ActiveRecord::Schema.define(version: 20160519233815) do
 
   create_table "challenges", force: :cascade do |t|
     t.string   "title"
@@ -25,8 +25,8 @@ ActiveRecord::Schema.define(version: 20160518223651) do
     t.integer "challenge_id"
     t.integer "user_id"
     t.string  "role"
-    t.boolean "is_active"
-    t.boolean "is_completed"
+    t.boolean "accepted_invite"
+    t.boolean "challenge_completed"
     t.boolean "vote_result"
   end
 
