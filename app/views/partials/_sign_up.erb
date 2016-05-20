@@ -1,27 +1,22 @@
 <h1>Sign up</h1>
 
-<form action="/user/signup" method="post">
+<form action="/user/signup" method="post" enctype="multipart/form-data">
   <div>
-
       <input type="text" id="first_name" name="first_name" placeholder="First Name" required>
   </div>
   <div>
-
       <input type="text" id="last_name" name="last_name" placeholder="Last Name" required>
   </div>
-<div>
-
-    <input type="email" id="email" name="email" placeholder="Jon.Doe@example.com" required>
-</div>
-
-<div>
-
-    <input type="password" id="password" name="password" placeholder="******" required>
-</div>
-
-
-
-<div>
-    <input type="submit" value="Sign up"></input>
-</div>
+  <div>
+      <input type="email" id="email" name="email" placeholder="Jon.Doe@example.com" required>
+  </div>
+  <div>
+      <input type="password" id="password" name="password" placeholder="******" required>
+  </div>
+  <div>
+  <input type="file" name="file">
+  </div>
+  <div>
+      <input type="submit" value="Sign up"></input>
+  </div>
 </form>

@@ -14,10 +14,15 @@
   <div>
     <% if Time.current > @challenge.end_time && @is_creator %>
       <div>
-      <!-- prompt user for photo of proof -->
+        <h1>It's Judgment Day!</h1>
+        <h1>Upload a photo for proof!</h1>
+        <form id='proof_form' action="save_image" method="post" enctype="multipart/form-data">
+          <input id='proof_image' type="file" name="file">
+          <input type="submit" value="Upload image">
+        </form>
       <% end %>
     <% elsif Time.current > @challenge.end_time && @is_voter %>
-      
+
   </div>
     <h1>Description:</h1>
     <p><%= @challenge.description %></p>

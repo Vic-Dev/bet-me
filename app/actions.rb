@@ -17,7 +17,12 @@ helpers do
 end
 
 def authenticate_user
-  redirect'/user/login' unless current_user
+  if current_user
+    true
+  else
+    redirect '/user/login'
+  # return current_user ? true : redirect '/user/login'
+  end
 end
 
 get '/' do
@@ -79,6 +84,10 @@ post '/challenges/create' do
 	end
 end
 
+#=========================
+# Login, signup and logout
+#=========================
+
 get '/user/signup' do
   @user = User.new
   erb :'users/signup'
@@ -91,11 +100,24 @@ post '/user/signup' do
     email: params[:email],
     password: params[:password]
     )
+  session[:user_session] = SecureRandom.hex
+  @user.login_token = session[:user_session]
+  @user.save
   if @user.save
+    @filename = "#{@user.id}_profile_photo"
+    file = params[:file][:tempfile]
+    File.open("./public/#{@filename}", 'wb') do |f|
+      f.write(file.read)
+    end
+    authenticate_user
     redirect '/user/profile'
   else
     redirect'/index'
   end
+end
+
+get '/user/login' do
+
 end
 
 post '/user/login' do
@@ -104,7 +126,6 @@ post '/user/login' do
     session[:user_session] = SecureRandom.hex
     @user.login_token = session[:user_session]
     @user.save
-
     # redirect '/user/profile/'
     authenticate_user
     erb :index
@@ -113,18 +134,34 @@ post '/user/login' do
   end
 end
 
+
+get '/user/logout' do
+  session.clear
+  erb :index
+end
+
+
+#=====================
+# Users
+#=====================
+
 get '/user/profile' do
-  if current_user
-    erb :'profile'
+  @current_challenges = Challenge.where("end_time > ?", Time.current)
+  @expired_challenges = Challenge.where("start_time < ?", Time.current)
+  @user = current_user
+  if current_user.login_token == session[:user_session]
+    binding.pry
+    erb :'user/profile'
   else
     redirect '/index'
   end
 end
 
-post '/user/logout' do
-  session.clear
-  erb :index
-end
+# get '/profile/:id' do
+#   @user = User.find(params[:id])
+#   @challenges = @user.challenges
+#   erb :'user/profile'
+# end
 
 get '/user/profile/:id' do
   @current_challenges = Challenge.where("end_time > ?", Time.current)
@@ -138,11 +175,42 @@ end
 # challenges
 #============
 
+# save new challenge data to db
+# TODO: add voters to challenge, and create records for voters
+post '/challenges/create' do 
+  authenticate_user
+  start_date = Date.parse(params[:start_date]).to_date
+  end_date = Date.parse(params[:end_date]).to_date
+  @challenge = Challenge.new(
+    title: params[:title],
+    description: params[:description],
+    wager: params[:wager],
+    start_time: start_date,
+    end_time: end_date
+    )
+  @challenge.save
+  if @challenge.save
+    @record = Record.new(
+    challenge_id: @challenge.id,
+    user_id: current_user.id,
+    role: "creator",
+    accepted_invite: true,
+    challenge_completed: false
+    )
+    @record.save
+  else
+    erb :'/challenges/new'
+  end
+end
+
+
 get '/challenges' do
   @current_challenges = Challenge.where("end_time > ?", Time.current)
   @expired_challenges = Challenge.where("start_time < ?", Time.current)
   erb :'challenges/index'
 end
+
+# TODO: /challenges/:id page
 
 # get '/challenges/:id' do
 #   @user = current_user
@@ -156,3 +224,19 @@ end
 #   @post_vote_result = (@true_votes >= @total_voters/2) ? true : false
 #   erb :'challenges/profile'
 # end
+
+
+# get '/challenges/:id' do
+#   @user = current_user
+#   @is_creator = Record.where("role = ? AND user_id = ?",'creator',@user.id)
+#   @is_voter = Record.where("role = ? AND user_id = ?",'voter',@user.id)
+#   @challenge = Challenge.find(params[:id])
+#   #@voter_result is number of TRUE votes
+#   @true_votes = @challenge.users.where('vote_result = ?',true).count(:vote_result)
+#   #subtract the creator becasue he cannot vote
+#   @total_voters = @challenge.users.length - 1
+#   @post_vote_result = (@true_votes >= @total_voters/2) ? true : false
+#   erb :'challenges/profile'
+# end
+
+

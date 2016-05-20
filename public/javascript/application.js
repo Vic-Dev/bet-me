@@ -4,14 +4,13 @@ $(document).ready(function() {
         singleDatePicker: true,
         showDropdowns: true
     }, 
-    function(start, end, label) {
+    function(start, end, label) {});
     });
-});$(function() {
+  $(function() {
     $('date-picker').daterangepicker({
         singleDatePicker: true,
         showDropdowns: true
     }, 
-    function(start, end, label) {
+    function(start, end, label) {});
     });
-});
 });
