@@ -1,23 +1,19 @@
 <h2>Create A Challenge</h2>
-<script type="text/javascript"></script>
-<script type="text/javascript" src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
-<script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap/latest/css/bootstrap.css" />
- 
+
 <!-- Include Date Range Picker -->
 <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
 <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
 
 <form class="form-horizontal" method="post" action="/challenges/create">
   <div class="form-group">
-    <label for="create-title" class="col-sm-2 control-label">Title</label>
+    <label for="create-title" class="col-sm-2 control-label">Choose a title for your challenge</label>
     <div class="col-sm-6">
       <input type="text" class="form-control" id="create-title" name="title" placeholder="Challenge Title" value="<%= @challenge.title %>">
     </div>
   </div>
   
   <div class="form-group">
-    <label for="create-description" class="col-sm-2 control-label">Description</label>
+    <label for="create-description" class="col-sm-2 control-label">Describe your challenge</label>
     <div class="col-sm-6">
     	<textarea id="create-description" name="description" type="text" class="form-control" rows="3" placeholder="Description" value="<%= @challenge.description %>"></textarea>
     </div>
@@ -31,17 +27,9 @@
   </div>
 
   <div class="form-group">
-    <label for="input-start-date" class="col-sm-2 control-label">Start Date</label>
+    <label for="input-start-and-end-date" class="col-sm-2 control-label">Choose a Start and End date</label>
     <div class="col-sm-6">
-      <input type="date" class="form-control date-picker" id="input-start-date" name="start_date" placeholder="Start Date" value="<%= @challenge.start_time %>">
-    </div>
-  </div>
-
-
-  <div class="form-group">
-    <label for="input-end-date" class="col-sm-2 control-label">End Date</label>
-    <div class="col-sm-6">
-      <input type="date" class="form-control date-picker" id="input-end-date" name="end_date" placeholder="End Date" value="<%= @challenge.end_time %>">
+      <input type="text" name="daterange" value="01/01/2015 1:30 PM - 01/01/2015 2:00 PM" />
     </div>
   </div>
 
