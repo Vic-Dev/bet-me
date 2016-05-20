@@ -77,7 +77,7 @@ get '/user/profile' do
   end
 end
 
-post '/user/logout' do
+get '/user/logout' do
   session.clear
   erb :index
 end
