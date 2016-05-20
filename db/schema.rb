@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160520210009) do
+ActiveRecord::Schema.define(version: 20160520220518) do
 
   create_table "challenges", force: :cascade do |t|
     t.string   "title"
@@ -20,7 +20,8 @@ ActiveRecord::Schema.define(version: 20160520210009) do
     t.datetime "start_time"
     t.datetime "end_time"
     t.integer  "user_id"
-    t.boolean  "complete",    default: false
+    t.boolean  "successful"
+    t.boolean  "complete"
   end
 
   add_index "challenges", ["user_id"], name: "index_challenges_on_user_id"
