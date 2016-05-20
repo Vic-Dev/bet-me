@@ -139,6 +139,7 @@ post '/challenges/create' do
     end_time: end_time
     )
   @challenge.save
+  binding.pry
   if @challenge.save
     @record = Record.new(
     challenge_id: @challenge.id,
