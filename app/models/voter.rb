@@ -1,4 +1,4 @@
-class Record < ActiveRecord::Base
+class Voter < ActiveRecord::Base
 
   validates :challenge_id, :user_id, :role, presence: true
   validates :accepted_invite, inclusion: { in: [true, false] }

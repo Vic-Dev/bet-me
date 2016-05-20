@@ -99,7 +99,8 @@ get '/user/profile' do
   @current_challenges_voter = nil
   @expired_challenges = Challenge.where("start_time < ?", Time.current)
   @user = current_user
-  @all_challenges_created = Record.where("user_id = ? AND role = ?", current_user.id, "creator").count
+  # @all_challenges_created = Record.where("user_id = ? AND role = ?", current_user.id, "creator").count
+  @all_challenges_created = Challenge.user
   @succesful_challenges = Record.where("user_id = ? AND role = ? AND vote_result = ?",current_user.id,"creator",true).count
   @unsuccesful_challenges = Record.where("user_id = ? AND role = ? AND vote_result = ?",current_user.id,"creator",false).count
   if current_user.login_token == session[:user_session]
@@ -147,16 +148,16 @@ post '/challenges/create' do
     )
   @challenge.save
   if @challenge.save
-    @record = Record.new(
+    @voter = Voter.new(
     challenge_id: @challenge.id,
     user_id: current_user.id,
     role: "creator",
     accepted_invite: true,
     challenge_completed: false
     )
-    if @record.save
+    if @voter.save
       voters.each do |voter|
-        voter_record = Record.new(
+        voter_record = Voter.new(
           challenge_id: @challenge.id,
           user_id: voter,
           role: "voter",
@@ -164,6 +165,7 @@ post '/challenges/create' do
           challenge_completed: false
         )
         voter_record.save
+
       end
     else
       "error"
@@ -185,8 +187,8 @@ end
 
 get '/challenges/:id' do
   @user = current_user
-  @is_creator = Record.where("role = ? AND user_id = ?",'creator',@user.id)
-  @is_voter = Record.where("role = ? AND user_id = ?",'voter',@user.id)
+  @is_creator = Voter.where("role = ? AND user_id = ?",'creator',@user.id)
+  @is_voter = Voter.where("role = ? AND user_id = ?",'voter',@user.id)
   @is_photo = File.exists?("./public/images/#{user.id}_proof_photo.jpg")
   @is_judgeday = Time.current > @challenge.end_time && @is_creator
   @challenge = Challenge.find(params[:id])

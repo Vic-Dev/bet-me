@@ -1,0 +1,15 @@
+<% @current_challenges.each do |challenge| %>
+  <div class="challenge-box page-header">
+    <!-- Assumption that time stamps will work as shown
+         YYYY/MM/DD-->
+    <%= challenge.title %>
+    <br>
+    <a href="/user/profile/<%= challenge.creator.id %>">Created by: <%= challenge.creator.first_name + ' ' +challenge.creator.last_name[0] %></a>
+    <br>
+    $<%= '%.2f' % challenge.wager %>
+    <br>
+    <a href="/challenges/<%= challenge.id %>">Click for details</a>
+    <br>
+    <% challenge.end_time - challenge.start_time %>
+  </div>
+<% end %>
