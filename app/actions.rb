@@ -33,7 +33,6 @@ get '/index' do
   erb :index
 end
 
-
 #=========================
 # Login, signup and logout
 #=========================
@@ -54,10 +53,12 @@ post '/user/signup' do
   @user.login_token = session[:user_session]
   @user.save
   if @user.save
-    @filename = "#{@user.id}_profile_photo"
-    file = params[:file][:tempfile]
-    File.open("./public/#{@filename}", 'wb') do |f|
-      f.write(file.read)
+    unless params[:file].nil?
+      @filename = "#{@user.id}_profile_photo.jpg"
+      file = params[:file][:tempfile]
+      File.open("./public/images/#{@filename}", 'wb') do |f|
+        f.write(file.read)
+      end
     end
     authenticate_user
     redirect '/user/profile'
@@ -94,10 +95,12 @@ end
 #=====================
 
 get '/user/profile' do
-  binding.pry
   @current_challenges = Challenge.where("end_time > ?", Time.current)
   @expired_challenges = Challenge.where("start_time < ?", Time.current)
   @user = current_user
+  @all_challenges_created = Record.where("user_id = ? AND role = ?", current_user.id, "creator").count
+  @succesful_challenges = Record.where("user_id = ? AND role = ? AND vote_result = ?",current_user.id,"creator",true).count
+  @unsuccesful_challenges = Record.where("user_id = ? AND role = ? AND vote_result = ?",current_user.id,"creator",false).count
   if current_user.login_token == session[:user_session]
     erb :'user/profile'
   else
@@ -163,6 +166,8 @@ get '/challenges/:id' do
   @user = current_user
   @is_creator = Record.where("role = ? AND user_id = ?",'creator',@user.id)
   @is_voter = Record.where("role = ? AND user_id = ?",'voter',@user.id)
+  @is_photo = File.exists?("./public/images/#{user.id}_proof_photo.jpg")
+  @is_judgeday = Time.current > @challenge.end_time && @is_creator
   @challenge = Challenge.find(params[:id])
 
   # @voter_result is number of TRUE votes
@@ -174,6 +179,13 @@ get '/challenges/:id' do
   erb :'challenges/profile'
 end
 
+post '/challenge/save_proof' do
+  @filename = "#{@user.id}_proof_photo.jpg"
+  file = params[:file][:tempfile]
+  File.open("./public/images/#{@filename}", 'wb') do |f|
+    f.write(file.read)
+  end
+end
 # STRETCH: creators can edit challenge
 
 # get '/challenges/:id/edit' do
@@ -181,3 +193,7 @@ end
 #   @challenge = Challenge.find(params[:id])
 #   erb :'challenges/new'
 # end
+
+error Sinatra::NotFound do
+  erb :'errors/oops'
+end

@@ -4,7 +4,7 @@
     <div>
       <p>Created by:</p>
       <h3>@challenge.users</h3>
-      <!-- use profile photo img -->
+      <img src="/images/<%= @user.id %>_profile_photo.jpg" />
     </div>
   </div>
   <div>
@@ -12,14 +12,18 @@
     <h1>Time left: <%= Time.current - @challenge.end_time %></h1>
   </div>
   <div>
-    <% if Time.current > @challenge.end_time && @is_creator %>
+    <% if is_judgeday %>
       <div>
         <h1>It's Judgment Day!</h1>
-        <h1>Upload a photo for proof!</h1>
-        <form id='proof_form' action="save_image" method="post" enctype="multipart/form-data">
-          <input id='proof_image' type="file" name="file">
-          <input type="submit" value="Upload image">
-        </form>
+        <% is_photo %>
+          <img id="proof_photo" src="/images/<%= @user.id %>_profile_photo.jpg">
+        <% else %>
+          <h1>Upload a photo for proof!</h1>
+          <form id='proof_image_form' action="save_image" method="post" enctype="multipart/form-data">
+            <input id='proof_image_input' type="file" name="file">
+            <input type="submit" value="Upload image">
+          </form>
+        <% end %>
     <% elsif true %>
 
     <% end %>
