@@ -21,4 +21,13 @@ $(document).ready(function() {
       style: 'btn-info',
       size: 4
   });
+  var path = window.location.pathname
+  var styleNavBar = function() {
+    $(".nav li").each(function(){
+      if ($(this).find('a').attr('href') === path) {
+        $(this).addClass('active')
+      };
+    });
+  }
+  styleNavBar()
 });
