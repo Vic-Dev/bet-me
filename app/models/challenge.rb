@@ -5,9 +5,13 @@ class Challenge < ActiveRecord::Base
   validates :wager, presence: true
   validates :start_time, presence: true
   validates :end_time, presence: true
+  validates :complete, inclusion: { in: [true, false] }
 
-  has_many :records
-  has_many :users, through: :records
+  has_many :voters
+  has_many :users, through: :voters
+  belongs_to :user
+
+
 
   def creator
     record = Record.where("challenge_id = ? AND role = ?",self.id , "creator").first
