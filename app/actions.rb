@@ -131,6 +131,7 @@ post '/challenges/create' do
   capture_dates = /(.*) - (.*)/.match(date_range)
   start_time = DateTime.parse(capture_dates[1])
   end_time = DateTime.parse(capture_dates[2])
+  voters = params[:voters]
   @challenge = Challenge.new(
     title: params[:title],
     description: params[:description],
@@ -139,7 +140,6 @@ post '/challenges/create' do
     end_time: end_time
     )
   @challenge.save
-  binding.pry
   if @challenge.save
     @record = Record.new(
     challenge_id: @challenge.id,
@@ -148,7 +148,20 @@ post '/challenges/create' do
     accepted_invite: true,
     challenge_completed: false
     )
-    @record.save
+    if @record.save
+      voters.each do |voter|
+        voter_record = Record.new(
+          challenge_id: @challenge.id,
+          user_id: voter,
+          role: "voter",
+          accepted_invite: false,
+          challenge_completed: false
+        )
+        voter_record.save!
+      end
+    else
+      "error"
+    end
   else
     erb :'/challenges/new'
   end
