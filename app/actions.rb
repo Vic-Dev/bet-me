@@ -157,11 +157,12 @@ post '/challenges/create' do
           accepted_invite: false,
           challenge_completed: false
         )
-        voter_record.save!
+        voter_record.save
       end
     else
       "error"
     end
+    redirect "/challenges/#{@challenge.id}"
   else
     erb :'/challenges/new'
   end
