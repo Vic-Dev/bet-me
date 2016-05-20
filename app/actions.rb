@@ -100,8 +100,8 @@ get '/user/profile' do
   @expired_challenges = Challenge.where("start_time < ?", Time.current)
   @user = current_user
   # @all_challenges_created = Record.where("user_id = ? AND role = ?", current_user.id, "creator").count
-  @all_challenges_created = Challenge.user
-  @succesful_challenges = Record.where("user_id = ? AND role = ? AND vote_result = ?",current_user.id,"creator",true).count
+  @all_challenges_created = Challenge.where(user_id: current_user.id)
+  # @succesful_challenges = Record.where("user_id = ? AND role = ? AND vote_result = ?",current_user.id,"creator",true).count
   @unsuccesful_challenges = Record.where("user_id = ? AND role = ? AND vote_result = ?",current_user.id,"creator",false).count
   if current_user.login_token == session[:user_session]
     erb :'user/profile'
