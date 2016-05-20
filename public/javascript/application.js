@@ -1,3 +1,5 @@
+var date = new Date();
+
 $(document).ready(function() {
     function cb(start, end) {
         $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
@@ -11,8 +13,9 @@ $(document).ready(function() {
             format: 'YYYY/MM/DD HH:mm',
             use24hours: true
         },
-        startDate: new Date(), 
-        endDate: new Date()
+        startDate: date, 
+        endDate: date,
+        minDate: date
     });
     $('.selectpicker').selectpicker({
       style: 'btn-info',
