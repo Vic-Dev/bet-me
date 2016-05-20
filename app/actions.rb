@@ -125,7 +125,7 @@ end
 
 # save new challenge data to db
 # TODO: add voters to challenge, and create records for voters
-post '/challenges/create' do 
+post '/challenges/create' do
   authenticate_user
   date_range = params[:daterange]
   capture_dates = /(.*) - (.*)/.match(date_range)
@@ -148,22 +148,24 @@ post '/challenges/create' do
     accepted_invite: true,
     challenge_completed: false
     )
-    if @record.save
-      voters.each do |voter|
-        voter_record = Record.new(
-          challenge_id: @challenge.id,
-          user_id: voter,
-          role: "voter",
-          accepted_invite: false,
-          challenge_completed: false
-        )
-        voter_record.save!
-      end
-    else
-      "error"
-    end
+    @record.save
+    # if @record.save
+    #   voters.each do |voter|
+    #     voter_record = Record.new(
+    #       challenge_id: @challenge.id,
+    #       user_id: voter,
+    #       role: "voter",
+    #       accepted_invite: false,
+    #       challenge_completed: false
+    #     )
+    #     voter_record.save
+    #   end
+    # else
+    #   "error"
+    # end
+    redirect :"/challenges/#{@challenge.id}"
   else
-    erb :'/challenges/new'
+    erb :'challenges/new'
   end
 end
 
@@ -197,4 +199,3 @@ end
 #   @challenge = Challenge.find(params[:id])
 #   erb :'challenges/new'
 # end
-
