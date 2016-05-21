@@ -1,3 +1,4 @@
+#TODO fix everything that says challenge.creator
 require_relative('./actions/profile')
 require_relative('./actions/challenges')
 
