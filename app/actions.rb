@@ -18,13 +18,11 @@ helpers do
   end
 
   def all_current_challenges
-    time_now = Time.now - 4.hours
-    @current_challenges = Challenge.where("end_time > ?", time_now)
+    @current_challenges = Challenge.where("end_time > ?", Time.now)
   end
 
   def all_expired_challenges
-    time_now = Time.now - 4.hours
-    @expired_challenges = Challenge.where("end_time < ?", time_now)
+    @expired_challenges = Challenge.where("end_time < ?", Time.now)
   end
 
 end
@@ -139,7 +137,7 @@ end
 get '/user/profile/:id' do
   @current_challenges_creator = Challenge.where(user_id: params[:id])
   @current_challenges_voter = nil
-  @expired_challenges = Challenge.where("start_time < ?", Time.current)
+  expired_challenges
   @user = User.find(params[:id])
   @challenges = @user.challenges.order(end_time: :desc)
   erb :'user/profile'
@@ -161,8 +159,8 @@ post '/challenges/create' do
   @user = current_user
   date_range = params[:daterange]
   capture_dates = /(.*) - (.*)/.match(date_range)
-  start_time = DateTime.parse(capture_dates[1])
-  end_time = DateTime.parse(capture_dates[2])
+  start_time = DateTime.parse(capture_dates[1]) + 4.hours
+  end_time = DateTime.parse(capture_dates[2]) + 4.hours
   voters = params[:voters]
   @challenge = Challenge.new(
     title: params[:title],
@@ -205,8 +203,8 @@ get '/challenges/:id' do
   @challenge = Challenge.find(params[:id])
   @is_photo = File.exists?("./public/images/#{current_user.id}_proof_photo.jpg")
   @is_voter = Voter.where('challenge_id = ? AND user_id = ?',@challenge.id, current_user.id)
-  @has_not_voted = Voter.where('challenge_id = ? AND user_id = ? AND vote = ?',@challenge.id, current_user.id, true)
-  @is_judgeday = Time.current > @challenge.end_time && @challenge.user_id = current_user.id
+  @has_not_voted = Voter.where('challenge_id = ? AND user_id = ? AND vote = ?',@challenge.id, current_user.id, nil)
+  @is_judgeday = Time.now > @challenge.end_time && @challenge.user_id = current_user.id
 
   @total_voters = Voter.where(challenge_id: @challenge.id).count
   @true_votes = Voter.where('challenge_id = ? AND vote = ?', @challenge.id, true).count
