@@ -190,6 +190,7 @@ end
 
 
 get '/challenges' do
+  @user = current_user
   all_current_challenges
   all_expired_challenges
   erb :'challenges/index'
