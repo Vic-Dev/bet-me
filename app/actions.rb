@@ -7,6 +7,7 @@ require 'pry'
 enable :sessions
 
 helpers do
+
   def current_user
     if session.has_key?(:user_session)
       user = User.find_by_login_token(session[:user_session])
@@ -14,6 +15,15 @@ helpers do
       nil
     end
   end
+
+  def all_current_challenges
+    @current_challenges = Challenge.where("end_time > ?", Time.now)
+  end
+
+  def all_expired_challenges
+    @expired_challenges = Challenge.where("end_time < ?", Time.now)
+  end
+
 end
 
 def authenticate_user
@@ -96,9 +106,8 @@ end
 
 get '/user/profile' do
   authenticate_user
-
-  # All current challenges:
-  @current_challenges = Challenge.where("end_time > ?", Time.now)
+  all_current_challenges
+  all_expired_challenges
 
   # All current challenges for current user as creator:
   @current_challenges_creator = @current_challenges.where(user_id: current_user.id)
@@ -107,8 +116,6 @@ get '/user/profile' do
     @current_challenges_voter = Voter.where('challenge_id = ? AND user_id = ?', challenge.id, current_user.id) 
   end
   
-  # All expired challenges:
-  @expired_challenges = Challenge.where("end_time < ?", Time.now)
   # All expired challenges for current user as creator:
   @expired_challenges_creator = @expired_challenges.where(user_id: current_user.id)
   @expired_challenges.each do |challenge|
@@ -183,9 +190,8 @@ end
 
 
 get '/challenges' do
-  @current_challenges_creator = Challenge.where("end_time > ?", Time.current)
-  @current_challenges_voter = nil
-  @expired_challenges = Challenge.where("start_time < ?", Time.current)
+  all_current_challenges
+  all_expired_challenges
   erb :'challenges/index'
 end
 
