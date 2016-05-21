@@ -2,34 +2,45 @@
   <div>
     <h1><%= @challenge.title %></h1>
     <div>
-      <p>Created by:</p>
-      <h3>@challenge.users</h3>
-      <img src="/images/<%= current_user.id %>_profile_photo.jpg" />
+      <h3>Created by: <%= @challenge.user.first_name + ' ' + @challenge.user.last_name[0] %></h3>
+      <%= erb :'partials/_user_profile_photo' %>
     </div>
   </div>
   <div>
     <h1>Bet: <%= @challenge.wager %></h1>
-    <h1>Time left: <%= Time.current - @challenge.end_time %></h1>
-  </div>
+    <h1>Time Left: <%= @challenge.end_time - Time.now <= 0 ? 0 : Time.at(@challenge.end_time - Time.now).utc.strftime("%Hh %Mm %Ss") %></h1>
+   </div>
   <div>
     <% if @is_judgeday %>
-    <div>
-      <h1>It's Judgment Day!</h1>
-      <% if @is_photo %>
-      <img id="proof_photo" src="/images/<%= @user.id %>_profile_photo.jpg">
-      <% else %>
-      <h1>Upload a photo for proof!</h1>
-      <form id='proof_image_form' action="save_image" method="post" enctype="multipart/form-data">
-        <input id='proof_image_input' type="file" name="file">
-        <input type="submit" value="Upload image">
-      </form>
-      <% end %>
-      <% elsif true %>
-
-      <% end %>
-    </div>
+      <div>
+        <h1>It's Judgment Day!</h1>
+        <% if @is_photo %>
+          <img id="proof_photo" src="/images/<%= @user.id %>_profile_photo.jpg">
+        <% else %>
+          <h1>Upload a photo for proof!</h1>
+          <form id='proof_image_form' action="save_image" method="post" enctype="multipart/form-data">
+            <input id='proof_image_input' type="file" name="file">
+            <input type="submit" value="Upload image">
+          </form>
+        <% end %>
+      </div>
+      <div>
+        <% if @is_voter && @has_not_voted %>
+          <div class="">
+            <div class="input-group-btn">
+              <input typehidden>
+                <button type="button" class="btn btn-success" value="PASSED">PASSED</button>
+                <button type="button" class="btn btn-danger">FAILED</button>
+              </input>
+            </div>
+          </div>
+        <% else %>
+          <h3>Vote Result:</h3>
+          Passed <%= @true_votes %> : <%= @failed_votes %> Fail
+        <% end %>
+      </div>
+    <% end %>
   </div>
+  <h1>Description:</h1>
+  <p><%= @challenge.description %></p>
 </div>
-    <h1>Description:</h1>
-    <p><%= @challenge.description %></p>
-

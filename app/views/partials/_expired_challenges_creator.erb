@@ -1,3 +1,4 @@
+<% if @expired_challenges_creator %>
 <% @expired_challenges_creator.each do |challenge| %>
   <div class="challenge-box page-header">
     <strong><%= challenge.title %></strong>
@@ -8,7 +9,8 @@
     <br>
     <a href="/challenges/<%= challenge.id %>">Click for details</a>
     <br>
-    <p>Time Left: <%= challenge.end_time - challenge.start_time %></p>
+    Time Left: <%= challenge.end_time - Time.current <= 0 ? 0 : Time.at(challenge.end_time - Time.current).utc.strftime("%Hh %Mm %Ss") %>
     <br>
   </div>
+<% end %>
 <% end %>
