@@ -113,14 +113,14 @@ get '/user/profile' do
   @current_challenges_creator = @current_challenges.where(user_id: current_user.id)
   @current_challenges.each do |challenge|
     # All current challenges for current user as voter:
-    @current_challenges_voter = Voter.where('challenge_id = ? AND user_id = ?', challenge.id, current_user.id) 
+    @current_challenges_voter = Voter.where('challenge_id = ? AND user_id = ?', challenge.id, current_user.id)
   end
-  
+
   # All expired challenges for current user as creator:
   @expired_challenges_creator = @expired_challenges.where(user_id: current_user.id)
   @expired_challenges.each do |challenge|
     # All expired challenges for current user as voter:
-    @expired_challenges_voter = Voter.where('challenge_id = ? AND user_id = ?', challenge.id, current_user.id) 
+    @expired_challenges_voter = Voter.where('challenge_id = ? AND user_id = ?', challenge.id, current_user.id)
   end
 
   @all_challenges_created = Challenge.where(user_id: current_user.id)
