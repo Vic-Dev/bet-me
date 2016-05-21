@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 20160520220518) do
     t.datetime "end_time"
     t.integer  "user_id"
     t.boolean  "successful"
-    t.boolean  "complete"
+    t.boolean  "complete",    default: false
   end
 
   add_index "challenges", ["user_id"], name: "index_challenges_on_user_id"
