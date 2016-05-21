@@ -135,9 +135,10 @@ get '/user/profile' do
 end
 
 get '/user/profile/:id' do
+  @all_challenges_created = Challenge.where(user_id: params[:id])
   @current_challenges_creator = Challenge.where(user_id: params[:id])
   @current_challenges_voter = nil
-  expired_challenges
+  all_expired_challenges
   @user = User.find(params[:id])
   @challenges = @user.challenges.order(end_time: :desc)
   erb :'user/profile'
