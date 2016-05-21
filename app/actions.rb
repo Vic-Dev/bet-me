@@ -105,7 +105,7 @@ end
 #=====================
 
 get '/user/profile' do
-  authenticate_user
+  @user = current_user
   all_current_challenges
   all_expired_challenges
 
@@ -134,7 +134,7 @@ get '/user/profile' do
 end
 
 get '/user/profile/:id' do
-  @current_challenges_creator = current_user.records.where("role = ?",'creator')
+  @current_challenges_creator = Challenge.where(user_id: params[:id])
   @current_challenges_voter = nil
   @expired_challenges = Challenge.where("start_time < ?", Time.current)
   @user = User.find(params[:id])
@@ -155,7 +155,7 @@ end
 # save new challenge data to db
 # TODO: add voters to challenge, and create records for voters
 post '/challenges/create' do
-  authenticate_user
+  @user = current_user
   date_range = params[:daterange]
   capture_dates = /(.*) - (.*)/.match(date_range)
   start_time = DateTime.parse(capture_dates[1])
@@ -197,7 +197,7 @@ end
 
 
 get '/challenges/:id' do
-  authenticate_user
+  @user = current_user
   @challenge = Challenge.find(params[:id])
   @is_photo = File.exists?("./public/images/#{current_user.id}_proof_photo.jpg")
   @is_judgeday = Time.current > @challenge.end_time && @challenge.user_id = current_user.id
