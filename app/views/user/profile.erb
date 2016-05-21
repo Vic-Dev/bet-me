@@ -1,7 +1,7 @@
 <div>
   <div>
-    <h1><%= @user.first_name %>'s Profile </h1>
-    <img id="currentPhoto" src="/images/<%= @user.id %>_profile_photo.jpg" onerror="this.src='/images/defaults/default.jpg'" width="400" height="400"/>
+    <h1><%= current_user.first_name %>'s Profile </h1>
+    <img id="currentPhoto" src="/images/<%= current_user.id %>_profile_photo.jpg" onerror="this.src='/images/defaults/default.jpg'" width="400" height="400"/>
     <h2>Statistics</h2>
     <h2>Total Created Challenges: <%= @all_challenges_created %></h2>
     <h2>Total Completed Challenges: <%= @succesful_challenges %></h2>
@@ -14,6 +14,9 @@
     <h3>As Voter:</h3>
     <%= erb :'partials/_current_challenges_voter' %>
     <h1>Past Challenges</h1>
-    <%= erb :'partials/_expired_challenges' %>
+    <h3>As Creator:</h3>
+    <%= erb :'partials/_expired_challenges_creator' %>
+    <h3>As Voter:</h3>
+    <%= erb :'partials/_expired_challenges_voter' %>
   </div>
 </div>

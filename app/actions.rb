@@ -7,6 +7,7 @@ require 'pry'
 enable :sessions
 
 helpers do
+
   def current_user
     if session.has_key?(:user_session)
       user = User.find_by_login_token(session[:user_session])
@@ -14,6 +15,15 @@ helpers do
       nil
     end
   end
+
+  def all_current_challenges
+    @current_challenges = Challenge.where("end_time > ?", Time.now)
+  end
+
+  def all_expired_challenges
+    @expired_challenges = Challenge.where("end_time < ?", Time.now)
+  end
+
 end
 
 def authenticate_user
@@ -95,13 +105,27 @@ end
 #=====================
 
 get '/user/profile' do
-  @current_challenges_creator = Challenge.where("end_time > ?", Time.current)
-  @current_challenges_voter = nil
-  @expired_challenges = Challenge.where("start_time < ?", Time.current)
-  @user = current_user
-  @all_challenges_created = Record.where("user_id = ? AND role = ?", current_user.id, "creator").count
-  @succesful_challenges = Record.where("user_id = ? AND role = ? AND vote_result = ?",current_user.id,"creator",true).count
-  @unsuccesful_challenges = Record.where("user_id = ? AND role = ? AND vote_result = ?",current_user.id,"creator",false).count
+  authenticate_user
+  all_current_challenges
+  all_expired_challenges
+
+  # All current challenges for current user as creator:
+  @current_challenges_creator = @current_challenges.where(user_id: current_user.id)
+  @current_challenges.each do |challenge|
+    # All current challenges for current user as voter:
+    @current_challenges_voter = Voter.where('challenge_id = ? AND user_id = ?', challenge.id, current_user.id)
+  end
+
+  # All expired challenges for current user as creator:
+  @expired_challenges_creator = @expired_challenges.where(user_id: current_user.id)
+  @expired_challenges.each do |challenge|
+    # All expired challenges for current user as voter:
+    @expired_challenges_voter = Voter.where('challenge_id = ? AND user_id = ?', challenge.id, current_user.id)
+  end
+
+  @all_challenges_created = Challenge.where(user_id: current_user.id)
+  @successful_challenges = @all_challenges_created.where(successfulness: true)
+  @unsuccesful_challenges = @all_challenges_created.where(successfulness: false)
   if current_user.login_token == session[:user_session]
     erb :'user/profile'
   else
@@ -134,7 +158,6 @@ post '/challenges/create' do
   authenticate_user
   date_range = params[:daterange]
   capture_dates = /(.*) - (.*)/.match(date_range)
-  binding.pry
   start_time = DateTime.parse(capture_dates[1])
   end_time = DateTime.parse(capture_dates[2])
   voters = params[:voters]
@@ -143,31 +166,21 @@ post '/challenges/create' do
     description: params[:description],
     wager: params[:wager],
     start_time: start_time,
-    end_time: end_time
+    end_time: end_time,
+    user_id: current_user.id,
+    complete: false
     )
   @challenge.save
   if @challenge.save
-    @record = Record.new(
-    challenge_id: @challenge.id,
-    user_id: current_user.id,
-    role: "creator",
-    accepted_invite: true,
-    challenge_completed: false
-    )
-    redirect :"/challenges/#{@challenge.id}"
-    if @record.save
-      voters.each do |voter|
-        voter_record = Record.new(
+    voters.each do |voter|
+      unless voter.to_i == current_user.id
+        voter_record = Voter.new(
           challenge_id: @challenge.id,
           user_id: voter,
-          role: "voter",
           accepted_invite: false,
-          challenge_completed: false
-        )
+          )
         voter_record.save
       end
-    else
-      "error"
     end
     redirect "/challenges/#{@challenge.id}"
   else
@@ -177,26 +190,22 @@ end
 
 
 get '/challenges' do
-  @current_challenges_creator = Challenge.where("end_time > ?", Time.current)
-  @current_challenges_voter = nil
-  @expired_challenges = Challenge.where("start_time < ?", Time.current)
+  all_current_challenges
+  all_expired_challenges
   erb :'challenges/index'
 end
 
 
 get '/challenges/:id' do
-  @user = current_user
-  @is_creator = Record.where("role = ? AND user_id = ?",'creator',@user.id)
-  @is_voter = Record.where("role = ? AND user_id = ?",'voter',@user.id)
-  @is_photo = File.exists?("./public/images/#{user.id}_proof_photo.jpg")
-  @is_judgeday = Time.current > @challenge.end_time && @is_creator
+  authenticate_user
   @challenge = Challenge.find(params[:id])
+  @is_photo = File.exists?("./public/images/#{current_user.id}_proof_photo.jpg")
+  @is_judgeday = Time.current > @challenge.end_time && @challenge.user_id = current_user.id
 
-  # @voter_result is number of TRUE votes
-  @true_votes = @challenge.users.where('vote_result = ?',true).count(:vote_result)
+  @true_votes = Voter.where('challenge_id = ? AND vote = ?', @challenge.id, true).count
 
-  # subtract the creator becasue he cannot vote
-  @total_voters = @challenge.users.length - 1
+  @total_voters = Voter.where(challenge_id: @challenge.id).count
+
   @post_vote_result = (@true_votes >= @total_voters/2) ? true : false
   erb :'challenges/profile'
 end
