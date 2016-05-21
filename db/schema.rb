@@ -42,5 +42,4 @@ ActiveRecord::Schema.define(version: 20160520220518) do
     t.boolean "accepted_invite"
     t.boolean "vote"
   end
-
 end
