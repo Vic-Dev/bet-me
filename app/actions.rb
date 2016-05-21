@@ -109,6 +109,12 @@ get '/user/profile' do
   
   # All expired challenges:
   @expired_challenges = Challenge.where("end_time < ?", Time.now)
+  # All expired challenges for current user as creator:
+  @expired_challenges_creator = @expired_challenges.where(user_id: current_user.id)
+  @expired_challenges.each do |challenge|
+    # All expired challenges for current user as voter:
+    @expired_challenges_voter = Voter.where('challenge_id = ? AND user_id = ?', challenge.id, current_user.id) 
+  end
 
   @all_challenges_created = Challenge.where(user_id: current_user.id)
   @successful_challenges = @all_challenges_created.where(successfulness: true)
