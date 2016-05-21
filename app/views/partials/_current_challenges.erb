@@ -10,6 +10,6 @@
     <br>
     <a href="/challenges/<%= challenge.id %>">Click for details</a>
     <br>
-    <% challenge.end_time - challenge.start_time %>
+    Time Left: <%= challenge.end_time - Time.current <= 0 ? 0 : Time.at(Time.current - challenge.end_time).strftime("%Hh %Mm %Ss") %>
   </div>
 <% end %>

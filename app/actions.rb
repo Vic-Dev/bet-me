@@ -124,9 +124,8 @@ get '/user/profile' do
   end
 
   @all_challenges_created = Challenge.where(user_id: current_user.id)
-  @successful_challenges = @all_challenges_created.where(successfulness: true)
-  @unsuccesful_challenges = @all_challenges_created.where(successfulness: false)
-  binding.pry
+  @successful_challenges = @all_challenges_created.where(successful: true).count
+  @unsuccesful_challenges = @all_challenges_created.where(successful: false).count
   if current_user.login_token == session[:user_session]
     erb :'user/profile'
   else
