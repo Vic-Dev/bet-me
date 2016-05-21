@@ -160,36 +160,40 @@ end
 # save new challenge data to db
 # TODO: add voters to challenge, and create records for voters
 post '/challenges/create' do
-  @user = current_user
-  date_range = params[:daterange]
-  capture_dates = /(.*) - (.*)/.match(date_range)
-  start_time = DateTime.parse(capture_dates[1]) + 4.hours
-  end_time = DateTime.parse(capture_dates[2]) + 4.hours
-  voters = params[:voters]
-  @challenge = Challenge.new(
-    title: params[:title],
-    description: params[:description],
-    wager: params[:wager],
-    start_time: start_time,
-    end_time: end_time,
-    user_id: current_user.id,
-    complete: false
-    )
-  @challenge.save
-  if @challenge.save
-    voters.each do |voter|
-      unless voter.to_i == current_user.id
-        voter_record = Voter.new(
-          challenge_id: @challenge.id,
-          user_id: voter,
-          accepted_invite: false,
-          )
-        voter_record.save
+  if params[:voters]
+    @user = current_user
+    date_range = params[:daterange]
+    capture_dates = /(.*) - (.*)/.match(date_range)
+    start_time = DateTime.parse(capture_dates[1]) + 4.hours
+    end_time = DateTime.parse(capture_dates[2]) + 4.hours
+    voters = params[:voters]
+    @challenge = Challenge.new(
+      title: params[:title],
+      description: params[:description],
+      wager: params[:wager],
+      start_time: start_time,
+      end_time: end_time,
+      user_id: current_user.id,
+      complete: false
+      )
+    @challenge.save
+    if @challenge.save
+      voters.each do |voter|
+        unless voter.to_i == current_user.id
+          voter_record = Voter.new(
+            challenge_id: @challenge.id,
+            user_id: voter,
+            accepted_invite: false,
+            )
+          voter_record.save
+        end
       end
+      redirect "/challenges/#{@challenge.id}"
+    else
+      erb :'challenges/new'
     end
-    redirect "/challenges/#{@challenge.id}"
   else
-    erb :'challenges/new'
+    redirect "/challenges/new"
   end
 end
 
