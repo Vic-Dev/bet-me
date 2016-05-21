@@ -202,8 +202,8 @@ get '/challenges/:id' do
   @user = current_user
   @challenge = Challenge.find(params[:id])
   @is_photo = File.exists?("./public/images/#{current_user.id}_proof_photo.jpg")
-  @is_voter = Voter.where('challenge_id = ? AND user_id = ?',@challenge.id, current_user.id) ? true : false
-  @has_not_voted = Voter.where('challenge_id = ? AND user_id = ? AND vote = ?',@challenge.id, current_user.id, nil) ? true : false
+  @is_voter = Voter.where('challenge_id = ? AND user_id = ?',@challenge.id, current_user.id)[0].nil? ? false : true
+  @has_not_voted = Voter.where('challenge_id = ? AND user_id = ? AND vote = ?',@challenge.id, current_user.id, nil)[0].nil? ? false : true
   @is_judgeday = Time.current > @challenge.end_time && @challenge.user_id = current_user.id
 
   @total_voters = Voter.where(challenge_id: @challenge.id).count
