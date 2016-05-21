@@ -169,9 +169,9 @@ end
 
 
 get '/challenges' do
-  @current_challenges_creator = Challenge.where("end_time > ?", Time.current)
-  @current_challenges_voter = nil
-  @expired_challenges = Challenge.where("start_time < ?", Time.current)
+  # @current_challenges_creator = Challenge.where("end_time > ?", Time.current)
+  # @current_challenges_voter = nil
+  # @expired_challenges = Challenge.where("start_time < ?", Time.current)
   erb :'challenges/index'
 end
 
