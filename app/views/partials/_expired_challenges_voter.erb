@@ -1,3 +1,4 @@
+<% if @expired_challenges_voter %>
 <% @expired_challenges_voter.each do |challenge| %>
   <% @challenge = Challenge.find(challenge.challenge_id) %>
   <div class="challenge-box page-header">
@@ -12,4 +13,5 @@
     <p>Time Left: <%= @challenge.end_time - @challenge.start_time %></p>
     <br>
   </div>
+<% end %>
 <% end %>
