@@ -2,7 +2,7 @@
   <div>
     <h1><%= @challenge.title %></h1>
     <div>
-      <h3>Created by: <%= @challenge.user.first_name + ' ' + @challenge.user.last_name[0] %></h3>
+      <h3>Created by: <%= Challenge.find(params[:id]).user.first_name + ' ' + Challenge.find(params[:id]).user.last_name[0] %></h3>
       <%= erb :'partials/_user_profile_photo' %>
     </div>
   </div>
