@@ -4,8 +4,8 @@
     <%= erb :'partials/_user_profile_photo' %>    </div>
     <h2>Statistics</h2>
     <h2>Total Created Challenges: <%= @all_challenges_created ? @all_challenges_created.count : 0 %></h2>
-    <h2>Total Completed Challenges: <%= @successful_challenges ? @successful_challenges.count : 0 %></h2>
-    <h2>Total Unsuccesful Challenges: <%= @unsuccesful_challenges ? @unsuccesful_challenges.count : 0 %></h2>
+    <h2>Total Completed Challenges: <%= @successful_challenges %></h2>
+    <h2>Total Unsuccesful Challenges: <%= @unsuccesful_challenges %></h2>
   </div>
   <div>
     <h1>Current Challenges</h1>

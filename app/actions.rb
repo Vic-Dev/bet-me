@@ -31,7 +31,7 @@ def authenticate_user
   if current_user
     true
   else
-    redirect '/user/login'
+    redirect 'index'
   end
 end
 
@@ -79,7 +79,7 @@ post '/user/signup' do
 end
 
 get '/user/login' do
-
+  erb :index
 end
 
 post '/user/login' do
@@ -106,6 +106,7 @@ end
 #=====================
 
 get '/user/profile' do
+  authenticate_user
   @user = current_user
   all_current_challenges
   all_expired_challenges
@@ -135,6 +136,7 @@ get '/user/profile' do
 end
 
 get '/user/profile/:id' do
+  authenticate_user
   @all_challenges_created = Challenge.where(user_id: params[:id])
   @current_challenges_creator = Challenge.where(user_id: params[:id])
   @current_challenges_voter = nil
@@ -149,6 +151,7 @@ end
 #============
 
 get '/challenges/new' do
+  authenticate_user
   @user = current_user
   @challenge = Challenge.new
   erb :'challenges/new'
@@ -192,6 +195,7 @@ end
 
 
 get '/challenges' do
+  authenticate_user
   @user = current_user
   all_current_challenges
   all_expired_challenges
@@ -200,12 +204,16 @@ end
 
 
 get '/challenges/:id' do
+  authenticate_user
   @user = current_user
   @challenge = Challenge.find(params[:id])
   @is_photo = File.exists?("./public/images/#{current_user.id}_proof_photo.jpg")
-  @is_voter = Voter.where('challenge_id = ? AND user_id = ?',@challenge.id, current_user.id)
-  @has_not_voted = Voter.where('challenge_id = ? AND user_id = ? AND vote = ?',@challenge.id, current_user.id, nil)
-  @is_judgeday = Time.now > @challenge.end_time && @challenge.user_id = current_user.id
+  # @is_voter = Voter.where('challenge_id = ? AND user_id = ?',@challenge.id, current_user.id)
+  # @has_not_voted = Voter.where('challenge_id = ? AND user_id = ? AND vote = ?',@challenge.id, current_user.id, nil)
+  # @is_judgeday = Time.now > @challenge.end_time && @challenge.user_id = current_user.id
+  @is_voter = Voter.where('challenge_id = ? AND user_id = ?',@challenge.id, current_user.id)[0].nil? ? false : true
+  @has_not_voted = Voter.where('challenge_id = ? AND user_id = ? AND vote = ?',@challenge.id, current_user.id, nil)[0].nil? ? false : true
+  @is_judgeday = Time.current > @challenge.end_time && @challenge.user_id = current_user.id
 
   @total_voters = Voter.where(challenge_id: @challenge.id).count
   @true_votes = Voter.where('challenge_id = ? AND vote = ?', @challenge.id, true).count
