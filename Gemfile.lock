@@ -26,7 +26,7 @@ GEM
     json (1.8.3)
     method_source (0.8.2)
     minitest (5.9.0)
-    multi_json (1.12.0)
+    multi_json (1.12.1)
     pry (0.10.3)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -73,6 +73,8 @@ GEM
       sinatra (>= 1.2.1)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
+    tzinfo-data (1.2016.4)
+      tzinfo (>= 1.0.0)
 
 PLATFORMS
   ruby
@@ -90,6 +92,8 @@ DEPENDENCIES
   sinatra-contrib
   sqlite3
   tux
+  tzinfo
+  tzinfo-data
 
 BUNDLED WITH
-   1.12.3
+   1.12.1
