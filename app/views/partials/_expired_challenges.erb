@@ -2,7 +2,7 @@
   <div class="challenge-box page-header">
     <strong><%= challenge.title %></strong>
     <br>
-    Created by: <a href="/user/profile/<%= challenge.creator.id %>"><%= challenge.creator.first_name + ' ' +challenge.creator.last_name[0] %></a>
+    Created by: <a href="/user/profile/<%= challenge.user.id %>"><%= challenge.user.first_name + ' ' +challenge.user.last_name[0] %></a>
     <br>
     Wager: $<%= '%.2f' % challenge.wager %>
     <br>
