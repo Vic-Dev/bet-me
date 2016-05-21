@@ -18,11 +18,13 @@ helpers do
   end
 
   def all_current_challenges
-    @current_challenges = Challenge.where("end_time > ?", Time.now)
+    time_now = Time.now - 4.hours
+    @current_challenges = Challenge.where("end_time > ?", time_now)
   end
 
   def all_expired_challenges
-    @expired_challenges = Challenge.where("end_time < ?", Time.now)
+    time_now = Time.now - 4.hours
+    @expired_challenges = Challenge.where("end_time < ?", time_now)
   end
 
 end
