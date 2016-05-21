@@ -106,7 +106,6 @@ end
 #=====================
 
 get '/user/profile' do
-  authenticate_user
   @user = current_user
   all_current_challenges
   all_expired_challenges
@@ -136,7 +135,6 @@ get '/user/profile' do
 end
 
 get '/user/profile/:id' do
-  authenticate_user
   @all_challenges_created = Challenge.where(user_id: params[:id])
   @current_challenges_creator = Challenge.where(user_id: params[:id])
   @current_challenges_voter = nil
@@ -151,7 +149,6 @@ end
 #============
 
 get '/challenges/new' do
-  authenticate_user
   @user = current_user
   @challenge = Challenge.new
   erb :'challenges/new'
@@ -199,7 +196,6 @@ end
 
 
 get '/challenges' do
-  authenticate_user
   @user = current_user
   all_current_challenges
   all_expired_challenges
@@ -208,7 +204,6 @@ end
 
 
 get '/challenges/:id' do
-  authenticate_user
   @user = current_user
   @challenge = Challenge.find(params[:id])
   @is_photo = File.exists?("./public/images/#{current_user.id}_proof_photo.jpg")

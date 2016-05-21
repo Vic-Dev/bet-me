@@ -6,7 +6,7 @@
     <br>
     Wager: $<%= '%.2f' % challenge.wager %>
     <br>
-    <a class="btn btn-default" role="button" href="/challenges/<%= challenge.id %>">Click for details</a>
+    <a href="/challenges/<%= challenge.id %>">Click for details</a>
     <br>
     Time Left: <%= challenge.end_time - Time.current <= 0 ? 0 : Time.at(challenge.end_time - Time.current).utc.strftime("%Hh %Mm %Ss") %>
     <br>
