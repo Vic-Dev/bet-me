@@ -1,14 +1,20 @@
 <% @expired_challenges.each do |challenge| %>
-  <div class="challenge-box page-header">
-    <strong><%= challenge.title %></strong>
-    <br>
-    Created by: <a href="/user/profile/<%= challenge.user_id %>"><%= challenge.user.first_name + ' ' +challenge.user.last_name[0] %></a>
-    <br>
-    Wager: $<%= '%.2f' % challenge.wager %>
-    <br>
-    <a href="/challenges/<%= challenge.id %>">Click for details</a>
-    <br>
-    Time Left: <%= challenge.end_time - Time.current <= 0 ? 0 : Time.at(challenge.end_time - Time.current).utc.strftime("%Hh %Mm %Ss") %>
-    <br>
+<div class="challenge-box-page-header">
+  <div>
+    Created by: <% challenge.user_id %><%= challenge.user.first_name + ' ' +challenge.user.last_name[0] %></a>
   </div>
+  <div class="wager-header">
+    $<%= '%.2f' % challenge.wager %>
+  </div>
+  <div class="challenge-title">
+    <strong><%= challenge.title %></strong>
+  </div>
+  <br>
+  <button type="button" class="btn btn-default">
+    <a href="/challenges/<%= challenge.id %>">Click for details</a>
+  </button>
+  <div class="time-header">
+    Time Left: <%= challenge.end_time - Time.current <= 0 ? 0 : Time.at(challenge.end_time - Time.current).utc.strftime("%Hh %Mm %Ss") %>
+  </div>
+</div>
 <% end %>

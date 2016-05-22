@@ -1,15 +1,20 @@
 <% @current_challenges.each do |challenge| %>
-  <div class="challenge-box page-header">
-    <!-- Assumption that time stamps will work as shown
-         YYYY/MM/DD-->
-    <%= challenge.title %>
+  <div class="challenge-box-page-header">
+    <div>
+      Created by: <%= challenge.user_id %><%= challenge.user.first_name + ' ' + challenge.user.last_name %></a>
+    </div>
+    <div class="wager-header">
+      $<%= '%.2f' % challenge.wager %>
+    </div>
+    <div class="challenge-title">
+      <strong><%= challenge.title %></strong>
+    </div>
     <br>
-    Created by: <a href="/user/profile/<%= challenge.user_id %>"><%= challenge.user.first_name + ' ' + challenge.user.last_name %></a>
-    <br>
-    $<%= '%.2f' % challenge.wager %>
-    <br>
-    <a href="/challenges/<%= challenge.id %>">Click for details</a>
-    <br>
-    Time Left: <%= challenge.end_time - Time.current <= 0 ? 0 : Time.at(challenge.end_time - Time.current).utc.strftime("%Hh %Mm %Ss") %>
+    <button type="button" class="btn btn-default">
+      <a href="/challenges/<%= challenge.id %>">Click for details</a>
+    </button>
+    <div class="time-header">
+      Time Left: <%= challenge.end_time - Time.current <= 0 ? 0 : Time.at(challenge.end_time - Time.current).utc.strftime("%Hh %Mm %Ss") %>
+    </div>
   </div>
 <% end %>
