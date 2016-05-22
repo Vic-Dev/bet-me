@@ -3,6 +3,14 @@
     <h1><%= @challenge.title %></h1>
     <div>
       <h3>Created by: <%= @challenge.user.first_name + ' ' + @challenge.user.last_name[0] %>.</h3>
+      <% if @all_votes_are_in %>
+        <h1> ALL VOTES ARE IN! </h1>
+        <% if @success %>
+          <h1> Congratulations! This user won the bet! </h1>
+        <% else %>
+          <h1> This user lost the bet. :( </h1>
+        <% end %>
+      <% end %>
       <img id="currentPhoto" src="/images/<%= @challenge.user.id %>_profile_photo.jpg" onerror="this.src='/images/defaults/default.jpg'" width="400" height="400"/>
     </div>
   </div>
@@ -28,8 +36,10 @@
         <% if @is_voter && @has_not_voted %>
           <div>
             <div class="input-group-btn">
-              <form method="post" action="/challenges/vote">
-                <input type="button" value="PASSED" name="vote_pass" class="btn btn-success">
+              <form method="post" action="/challenges/<%= @challenge.id %>">
+                <input type="submit" value="PASSED" name="vote_pass" class="btn btn-success">
+                <br/>
+                <input type="submit" value="FAILED" name="vote_fail" class="btn btn-danger">
               </form>
             </div>
           </div>
