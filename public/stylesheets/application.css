@@ -212,6 +212,12 @@ textarea {
   Index css
 
 **/
+
+.footer {
+  background-image: url(https://static.pexels.com/photos/101764/pexels-photo-101764.png);
+  background-size: cover;
+}
+
 .bottom-footer {
     width: 100%;
     background-color: rgba(19, 35, 47, 0.9);
@@ -240,4 +246,10 @@ textarea {
   background-color: rgba(19, 35, 47, 0.9);
   height: 400px;
   width: 500px;
+}
+
+#currentPhoto {
+  height: 400px;
+  width: 400px;
+  object-fit: cover;
 }
