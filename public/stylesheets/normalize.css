@@ -5,13 +5,7 @@
  * 2. Prevent iOS text size adjust after orientation change, without disabling
  *    user zoom.
  */
- .nav {
-   display: flex;
-   align-items: baseline;
- }.logo{
-   display: flex;
-   justify-content: flex-start;
- }
+
 
 html {
   font-family: sans-serif; /* 1 */
