@@ -1,38 +1,40 @@
-<div class="individual">
-  <div>
-    <h1><%= @challenge.title %></h1>
-    <div>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h1 class="page-header"><%= @challenge.title %></h1>
+      <div class="challenge-body-left">
       <h3>Created by: <%= @challenge.user.first_name + ' ' + @challenge.user.last_name[0] %>.</h3>
+      <img id="currentPhoto" src="/images/<%= @challenge.user.id %>_profile_photo.jpg" onerror="this.src='/images/defaults/default.jpg'" width="400" height="400"/>
+      </div>
+      <div class="challenge-body-right">
       <% if @all_votes_are_in %>
-        <h1> ALL VOTES ARE IN! </h1>
+        <h1 class="total-votes"><strong>ALL VOTES ARE IN!</strong></h1>
         <% if @success %>
-          <h1> Congratulations! This user won the bet! </h1>
+          <h1 class="success"> Congratulations! This user won the bet! </h1>
         <% else %>
-          <h1> This user lost the bet. :( </h1>
+          <h1 class="fail"> This user lost the bet. :( </h1>
         <% end %>
       <% end %>
-      <img id="currentPhoto" src="/images/<%= @challenge.user.id %>_profile_photo.jpg" onerror="this.src='/images/defaults/default.jpg'" width="400" height="400"/>
+      </div>
+    <div>
+      <h1>Bet: $<%= @challenge.wager %>0</h1>
+      <h1>Time Left: <%= @challenge.end_time - Time.now <= 0 ? 0 : Time.at(@challenge.end_time - Time.now).utc.strftime("%Hh %Mm %Ss") %></h1>
     </div>
-  </div>
-  <div>
-    <h1>Bet: <%= @challenge.wager %></h1>
-    <h1>Time Left: <%= @challenge.end_time - Time.now <= 0 ? 0 : Time.at(@challenge.end_time - Time.now).utc.strftime("%Hh %Mm %Ss") %></h1>
-   </div>
-  <div>
-    <% if @is_judgeday %>
-      <div>
-        <h1>It's Judgment Day!</h1>
-        <% if @is_photo %>
+    <div class="challenge-bottom">
+      <% if @is_judgeday %>
+        <div>
+          <h1>It's Judgment Day!</h1>
+          <% if @is_photo %>
           <img id="proof_photo" src="/images/<%= @challenge.id %>_proof_photo.jpg">
-        <% elsif @is_creator && current_user.id == @challenge.user_id %>
+          <% elsif @is_creator && current_user.id == @challenge.user_id %>
           <h1>Upload a photo for proof!</h1>
           <form id='proof_image_form' action="<% @challenge.id %>" method="post" enctype="multipart/form-data"class="button button-block">
             <input id='proof_image_input' type="file" name="file">
             <input type="submit" value="Upload image">
           </form>
-        <% end %>
-      </div>
-      <div>
+          <% end %>
+        </div>
+        <div>
         <% if @is_voter && @has_not_voted %>
           <div>
             <div class="input-group-btn">
@@ -44,12 +46,18 @@
             </div>
           </div>
         <% else %>
+        <div class="text-center">
           <h3>Vote Result:</h3>
-          Passed <%= @true_votes %> : <%= @failed_votes %> Fail
+          <h4>Passed <%= @true_votes %> : <%= @failed_votes %> Fail</h4>
+          </div>
+          <hr/>
         <% end %>
-      </div>
-    <% end %>
+        </div>
+      <% end %>
+    </div>
+    <div class="challenge-desc">
+    <h1 class="page-header desc">Description:</h1>
+    <p><%= @challenge.description %></p>
+    </div>
   </div>
-  <h1>Description:</h1>
-  <p><%= @challenge.description %></p>
 </div>

@@ -14,7 +14,7 @@ html {
 }
 
 body {
-  background: #c1bdba;
+  background: rgba(19, 35, 47, 0.9);
   font-family: 'Titillium Web', sans-serif;
 }
 
@@ -310,6 +310,7 @@ textarea {
   display: inline-block;
   padding-left: 10%;
   padding-top: 5%;
+  color: white;
 }
 
 .challenges-list {
@@ -341,4 +342,42 @@ textarea {
 
 .challenge-box a:hover {
   color: yellow;
+}
+
+.challenge-body-right {
+  padding-top: 10%;
+  padding-left: 2%
+}
+
+.challenge-body-left {
+  float: left;
+  display: inline-block;
+}
+
+.challenge-bottom {
+  clear: both;
+  padding-top: 2%;
+  color: white;
+}
+
+.challenge-desc {
+  padding-bottom: 10%;
+  color: white;
+}
+
+.desc {
+  width: 40%;
+  margin-left: 30%;
+  margin-right: 30%;
+}
+
+.total-votes {
+}
+
+.success {
+  color: yellow;
+}
+
+.fail {
+  color: red;
 }
