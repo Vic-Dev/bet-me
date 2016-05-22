@@ -315,3 +315,30 @@ textarea {
 .challenges-list {
   clear: both;
 }
+
+.challenge-box {
+  background: #1ab188;
+  width: 80%;
+  border-radius: 100px;
+  margin-left: 10%;
+  margin-right: 10%;
+  padding: 10px;
+  color: white;
+}
+
+.challenge-left {
+  padding-left: 50px;
+}
+
+.challenge-right {
+  padding-right: 50px;
+}
+
+.challenge-box a {
+  color: black;
+  text-decoration: none !important;
+}
+
+.challenge-box a:hover {
+  color: yellow;
+}

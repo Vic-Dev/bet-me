@@ -2,16 +2,13 @@
   <% @expired_challenges_voter.each do |challenge| %>
     <% @challenge = Challenge.find(challenge.challenge_id) %>
     <div class="challenge-box page-header">
-      <strong><%= @challenge.title %></strong>
-      <br>
-      Created by: <a href="/user/profile/<%= @challenge.user_id %>"><%= @challenge.user.first_name %> <%= @challenge.user.last_name[0] %></a>
-      <br>
-      Wager: $<%= '%.2f' % @challenge.wager %>
-      <br>
-      <a href="/challenges/<%= @challenge.id %>">Click for details</a>
-      <br>
-      Time Left: <%= @challenge.end_time - Time.current <= 0 ? 0 : Time.at(@challenge.end_time - Time.current).utc.strftime("%Hh %Mm %Ss") %>
-      <br>
+      <p class="text-left body-left challenge-left">Created by: <a href="/user/profile/<%= @challenge.user_id %>"><%= @challenge.user.first_name %> <%= @challenge.user.last_name[0] %></a></p>
+      <p class="text-right challenge-right">Wager: $<%= '%.2f' % @challenge.wager %></p>
+      <h3 class="text-center"><strong><%= @challenge.title %></strong></h3>
+      <p class="text-left body-left challenge-left">
+        <a href="/challenges/<%= @challenge.id %>">Click for details</a>
+      </p>
+      <p class="text-right challenge-right">Time Left: <%= @challenge.end_time - Time.current <= 0 ? 0 : Time.at(@challenge.end_time - Time.current).utc.strftime("%Hh %Mm %Ss") %></p>
     </div>
   <% end %>
 <% end %>
