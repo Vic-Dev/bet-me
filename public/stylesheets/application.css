@@ -259,7 +259,8 @@ textarea {
 
 .title {
   color: rgba(19, 35, 47, 0.9);
-
+  font-size: 28px;
+  text-align: left;
 }
 
 .challenge {
@@ -315,6 +316,7 @@ textarea {
 
 .challenges-list {
   clear: both;
+  color: white;
 }
 
 .challenge-box {
@@ -380,4 +382,22 @@ textarea {
 
 .fail {
   color: red;
+}
+
+.proof-photo {
+  opacity: 0;
+}
+
+.proof-title {
+  margin-left: 35%;
+  margin-right: 35%;
+  color: white;
+}
+
+.proof-photo {
+  cursor: pointer;
+}
+
+.vote-buttons {
+  padding-top: 2%;
 }

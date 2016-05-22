@@ -110,8 +110,8 @@ get '/user/profile' do
   @user = current_user
   all_current_challenges
   all_expired_challenges
-  @current_challenges_creator = []
   @current_challenges_voter = []
+  @expired_challenges_voter = []
   @current_challenges_creator = @current_challenges.where(user_id: current_user.id)
   @expired_challenges_creator = @expired_challenges.where(user_id: current_user.id)
 
@@ -248,7 +248,7 @@ get '/challenges/:id' do
   @true_votes = Voter.where('challenge_id = ? AND vote = ?', @challenge.id, true).count
   @failed_votes = Voter.where('challenge_id = ? AND vote = ?', @challenge.id, false).count
   @all_votes_are_in = Voter.where(challenge_id: @challenge.id, vote: nil).length == 0
-  @success = (@true_votes >= @total_voters/2) ? true : false
+  @success = (@true_votes >= @failed_votes) ? true : false
   if @all_votes_are_in
     if @success
       @challenge.successful = true
@@ -272,10 +272,12 @@ post '/challenges/:id' do
     end
     @current_voter.save
   else
-    @filename = "#{@challenge.id}_proof_photo.jpg"
-    file = params[:file][:tempfile]
-    File.open("./public/images/#{@filename}", 'wb') do |f|
-      f.write(file.read)
+    if params[:file]
+      @filename = "#{@challenge.id}_proof_photo.jpg"
+      file = params[:file][:tempfile]
+      File.open("./public/images/#{@filename}", 'wb') do |f|
+        f.write(file.read)
+      end
     end
   end
   redirect "/challenges/#{params[:id]}"

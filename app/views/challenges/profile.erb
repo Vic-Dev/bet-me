@@ -25,11 +25,14 @@
         <div>
           <h1>It's Judgment Day!</h1>
           <% if @is_photo %>
-          <img id="proof_photo" src="/images/<%= @challenge.id %>_proof_photo.jpg">
+          <div class="text-center">
+            <img id="proof_photo" src="/images/<%= @challenge.id %>_proof_photo.jpg">
+          </div>
           <% elsif @is_creator && current_user.id == @challenge.user_id %>
           <h1>Upload a photo for proof!</h1>
           <form id='proof_image_form' action="<% @challenge.id %>" method="post" enctype="multipart/form-data"class="button button-block">
-            <input id='proof_image_input' type="file" name="file">
+            <label class="proof-title">Add an image as proof</label>
+            <input id='proof_image_input' type="file" name="file" class="proof-photo">
             <input type="submit" value="Upload image">
           </form>
           <% end %>
@@ -37,7 +40,7 @@
         <div>
         <% if @is_voter && @has_not_voted %>
           <div>
-            <div class="input-group-btn">
+            <div class="input-group-btn vote-buttons">
               <form method="post" action="/challenges/<%= @challenge.id %>">
                 <input type="submit" value="PASSED" name="vote_pass" class="btn btn-success">
                 <br/>
