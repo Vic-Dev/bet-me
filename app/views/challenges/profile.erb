@@ -1,4 +1,4 @@
-<div>
+<div class="individual">
   <div>
     <h1><%= @challenge.title %></h1>
     <div>
@@ -26,7 +26,7 @@
           <img id="proof_photo" src="/images/<%= @challenge.id %>_proof_photo.jpg">
         <% elsif @is_creator && current_user.id == @challenge.user_id %>
           <h1>Upload a photo for proof!</h1>
-          <form id='proof_image_form' action="<% @challenge.id %>" method="post" enctype="multipart/form-data">
+          <form id='proof_image_form' action="<% @challenge.id %>" method="post" enctype="multipart/form-data"class="button button-block">
             <input id='proof_image_input' type="file" name="file">
             <input type="submit" value="Upload image">
           </form>
