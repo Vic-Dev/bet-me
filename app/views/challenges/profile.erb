@@ -3,7 +3,6 @@
     <h1><%= @challenge.title %></h1>
     <div>
       <h3>Created by: <%= @challenge.user.first_name + ' ' + @challenge.user.last_name[0] %></h3>
-      <h3>@challenge.users</h3>
       <%= erb :'partials/_user_profile_photo' %>
     </div>
   </div>
@@ -16,10 +15,10 @@
       <div>
         <h1>It's Judgment Day!</h1>
         <% if @is_photo %>
-          <img id="proof_photo" src="/images/<%= @user.id %>_profile_photo.jpg">
-        <% else %>
+          <img id="proof_photo" src="/images/<%= @challenge.user_id %>_profile_photo.jpg">
+        <% elsif @is_creator %>
           <h1>Upload a photo for proof!</h1>
-          <form id='proof_image_form' action="save_image" method="post" enctype="multipart/form-data">
+          <form id='proof_image_form' action="<% @challenge.id %>" method="post" enctype="multipart/form-data">
             <input id='proof_image_input' type="file" name="file">
             <input type="submit" value="Upload image">
           </form>
