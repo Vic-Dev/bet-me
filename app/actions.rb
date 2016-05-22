@@ -221,6 +221,11 @@ end
 post '/challenges/:id' do
   @user = current_user
   @challenge = Challenge.find(params[:id])
+  if params[:vote_pass]
+    pass
+  elsif params[:vote_fail]
+    pass
+  end
   @filename = "#{@challenge.id}_proof_photo.jpg"
   file = params[:file][:tempfile]
   File.open("./public/images/#{@filename}", 'wb') do |f|

@@ -28,8 +28,10 @@
         <% if @is_voter && @has_not_voted %>
           <div class="">
             <div class="input-group-btn">
-              <input type="hidden">
+              <input type="submit" name="vote_fail">
                 <button type="button" class="btn btn-success" value="PASSED">PASSED</button>
+              </input>
+              <input type="submit" name="vote_pass">
                 <button type="button" class="btn btn-danger">FAILED</button>
               </input>
             </div>
