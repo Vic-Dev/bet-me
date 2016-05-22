@@ -1,19 +1,27 @@
 <div>
   <div>
-    <h1><%= @user.first_name %>'s Profile </h1>
+    <h1 class=main_header><%= @user.first_name %>'s Profile </h1>
     <img id="currentPhoto" src="/images/<%= current_user.id %>_profile_photo.jpg" onerror="this.src='/images/defaults/default.jpg'" width="400" height="400"/>
-    <h2>Statistics</h2>
-    <h2>Total Created Challenges: <%= @all_challenges_created %></h2>
-    <h2>Total Completed Challenges: <%= @succesful_challenges %></h2>
-    <h2>Total Unsuccesful Challenges: <%= @unsuccesful_challenges %></h2>
   </div>
   <div>
-    <h1>Current Challenges</h1>
+    <h2 class=body_header>Statistics</h2>
+    <h1 class=stat_body>Total Created Challenges: <%= @all_challenges_created %></h1>
+    <h1 class=stat_body>Total Completed Challenges: <%= @succesful_challenges %></h1>
+    <h1 class=stat_body>Total Unsuccesful Challenges: <%= @unsuccesful_challenges %></h1>
+  </div>
+  
+  <div>
+    <h2 class=body_header>Current Challenges</h2>
+
     <h3>As Creator:</h3>
+
+    <div>
     <%= erb :'partials/_current_challenges_creator' %>
+    </div>
+
     <h3>As Voter:</h3>
     <%= erb :'partials/_current_challenges_voter' %>
-    <h1>Past Challenges</h1>
+    <h2 class=body_header>Past Challenges</h2>
     <h3>As Creator:</h3>
     <%= erb :'partials/_expired_challenges_creator' %>
     <h3>As Voter:</h3>

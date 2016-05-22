@@ -1,14 +1,17 @@
 <% @current_challenges_creator.each do |challenge| %>
-  <div class="challenge-box page-header">
+  <div class="challenge-box-page-header">
+    Created by: <%challenge.user_id %><%= challenge.user.first_name + ' ' +challenge.user.last_name[0] %></a>
+    <div class="wager_header">
+    $<%= '%.2f' % challenge.wager %>
+    </div>
+    <br>
+    <div class="main_header"
     <strong><%= challenge.title %></strong>
+    </div>
     <br>
-    Created by: <a href="/user/profile/<%= challenge.user_id %>"><%= challenge.user.first_name + ' ' +challenge.user.last_name[0] %></a>
-    <br>
-    Wager: $<%= '%.2f' % challenge.wager %>
-    <br>
+    <button type="button" class="btn btn-default">
     <a href="/challenges/<%= challenge.id %>">Click for details</a>
-    <br>
-    <p>Time Left: <%= challenge.end_time - challenge.start_time %></p>
-    <br>
+    </button>
+    <p class="time_header">Time Left: <%= challenge.end_time - challenge.start_time %></p>
   </div>
 <% end %>
