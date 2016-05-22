@@ -18,8 +18,7 @@ $(document).ready(function() {
         minDate: date
     });
     $('.selectpicker').selectpicker({
-      style: 'btn-info',
-      size: 4
+      style: 'btn-info'
   });
   var path = window.location.pathname
   var styleNavBar = function() {

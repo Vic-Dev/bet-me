@@ -110,19 +110,25 @@ get '/user/profile' do
   @user = current_user
   all_current_challenges
   all_expired_challenges
-
-  # All current challenges for current user as creator:
+  @current_challenges_creator = []
+  @current_challenges_voter = []
   @current_challenges_creator = @current_challenges.where(user_id: current_user.id)
+  @expired_challenges_creator = @expired_challenges.where(user_id: current_user.id)
+
+  # All current challenges for current user as voter:
   @current_challenges.each do |challenge|
-    # All current challenges for current user as voter:
-    @current_challenges_voter = Voter.where(user_id: current_user.id)
+    find = Voter.where(challenge_id: challenge.id, user_id: current_user.id)
+    if find.exists?
+      @current_challenges_voter << find[0]
+    end
   end
 
-  # All expired challenges for current user as creator:
-  @expired_challenges_creator = @expired_challenges.where(user_id: current_user.id)
+  # All expired challenges for current user as voter:
   @expired_challenges.each do |challenge|
-    # All expired challenges for current user as voter:
-    @expired_challenges_voter = Voter.where(user_id: current_user.id)
+    find = Voter.where(challenge_id: challenge.id, user_id: current_user.id)
+    if find.exists?
+      @expired_challenges_voter << find[0]
+    end
   end
 
   @all_challenges_created = Challenge.where(user_id: current_user.id)
@@ -139,21 +145,33 @@ get '/user/profile/:id' do
   authenticate_user
   all_current_challenges
   all_expired_challenges
+  @current_challenges_voter = []
+  @expired_challenges_voter = []
   @all_challenges_created = Challenge.where(user_id: params[:id])
   @successful_challenges = @all_challenges_created.where(successful: true).count
   @unsuccesful_challenges = @all_challenges_created.where(successful: false).count
   @current_challenges_creator = Challenge.where(user_id: params[:id])
+  @expired_challenges_creator = @expired_challenges.where(user_id: params[:id])
+  
+  # All current challenges for current user as voter:
   @current_challenges.each do |challenge|
-    # All current challenges for current user as voter:
-    @current_challenges_voter = Voter.where(user_id: params[:id])
+    find = Voter.where(challenge_id: challenge.id, user_id: params[:id])
+    if find.exists?
+      @current_challenges_voter << find[0]
+    end
   end
+
+  # All expired challenges for current user as voter:
   @expired_challenges.each do |challenge|
-    # All expired challenges for current user as voter:
-    @expired_challenges_voter = Voter.where(user_id: params[:id])
+    find = Voter.where(challenge_id: challenge.id, user_id: params[:id])
+    if find.exists?
+      @expired_challenges_voter << find[0]
+    end
   end
+
+  binding.pry
   @user = User.find(params[:id])
   @challenges = @user.challenges.order(end_time: :desc)
-  binding.pry
   erb :'user/profile'
 end
 

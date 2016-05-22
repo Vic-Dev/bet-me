@@ -16,8 +16,8 @@ end
   title = Faker::Book.title
   description = Faker::Hipster.paragraph
   wager = Faker::Number.between(10, 500)
-  start_time = Faker::Time.between(DateTime.now + 2, DateTime.now + 30)
-  end_time = Faker::Time.between(start_time, start_time + 90)
+  start_time = Faker::Time.between(DateTime.now, DateTime.now + 30).utc
+  end_time = Faker::Time.between(start_time, start_time + 30).utc
   Challenge.create(
     title: title,
     description: description,
