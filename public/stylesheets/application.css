@@ -293,3 +293,11 @@ textarea {
 .btn-group {
   padding-bottom: 5%;
 }
+
+.daterange {
+  padding: 10px;
+}
+
+.date-label {
+  padding-top: 0 !important;
+}
