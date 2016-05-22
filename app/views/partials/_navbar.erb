@@ -1,25 +1,27 @@
-<div class="container">
-  <div class="header clearfix">
-    <nav class="nav navbar">
-    <h3 class="text-muted logo navbar-left">Bet Me</h3>
-      <ul class="nav nav-pills navbar-right"> 
-        <% if current_user %>
-          <li role="presentation">
-            <a href="/user/profile">Profile</a>
-          </li>
-          <li role="presentation">
-            <a href="/challenges/new">Create Challenge</a>
-          </li>
-          <li role="presentation">
-            <a href="/challenges">All Challenges</a>
-          </li>
-          <li role='presentation'>
-            <a href="/user/logout">Log Out</a>
-          </li>
-          <li role="presentation">
-            <span>Hi <%= current_user.first_name %> <%= current_user.last_name[0] %>.!</span>
-        <% end %>
-      </ul>
-    </nav>
+<% if current_user %>
+  <div id="nav">
+    <div class="container">
+      <div class="header clearfix">
+        <nav class="nav navbar">
+        <h3 color: #1ab188;class="text-muted logo navbar-left">Bet Me</h3>
+          <ul class="nav nav-pills navbar-right">
+              <li role="presentation">
+                <a href="/user/profile">Profile</a>
+              </li>
+              <li role="presentation">
+                <a href="/challenges/new">Create Challenge</a>
+              </li>
+              <li role="presentation">
+                <a href="/challenges">All Challenges</a>
+              </li>
+              <li role='presentation'>
+                <a href="/user/logout">Log Out</a>
+              </li>
+              <li role="presentation">
+                Hi <%= current_user.first_name %> <%= current_user.last_name[0] %>.!<br>
+            <% end %>
+          </ul>
+        </nav>
+      </div>
+    </div>
   </div>
-</div>

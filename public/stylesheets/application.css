@@ -57,8 +57,7 @@ a:hover {
   color: #a0b3b0;
   font-size: 15px;
   float: left;
-  max-width: 25%;
-  max-height: 25%;
+  width: 50%;
   text-align: center;
   cursor: pointer;
   -webkit-transition: .5s ease;
@@ -214,7 +213,7 @@ textarea {
 **/
 
 .footer {
-  background-image: url(https://static.pexels.com/photos/101764/pexels-photo-101764.png);
+  background-image: url(https://static.pexels.com/photos/29203/pexels-photo-29203.jpg);
   background-size: cover;
 }
 
@@ -227,7 +226,7 @@ textarea {
 }
 
 .office {
-  max-width: 20%;
+  max-width: 25%;
   float:left;
 }
 
@@ -243,13 +242,49 @@ textarea {
 .about {
   float: left;
   margin: 3% 0% 3% 10%;
-  background-color: rgba(19, 35, 47, 0.9);
-  height: 400px;
-  width: 500px;
+
 }
 
 #currentPhoto {
   height: 400px;
   width: 400px;
   object-fit: cover;
+}
+
+#nav {
+  background: rgba(19, 35, 47, 0.9);
+  color: #1ab188;
+}
+
+.title {
+  color: rgba(19, 35, 47, 0.9);
+
+}
+
+.challenge {
+  margin: auto;
+  width: 60%;
+  border: 3px;
+  padding: 10px;
+
+}
+
+.new {
+  color: rgb(255, 255, 255);
+}
+
+.individual {
+  margin: auto;
+  width: 60%;
+  border: 3px;
+  padding: 10px;
+  display: -webkit-flex;
+   display: flex;
+   -webkit-flex-direction: column;
+   flex-direction: column;
+}
+
+#friends {
+  padding-bottom: 40px;
+
 }

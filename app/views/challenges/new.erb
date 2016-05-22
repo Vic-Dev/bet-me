@@ -1,45 +1,47 @@
-<h2>Create A Challenge</h2>
+<div class="challenge">
 
-<form class="form-horizontal" method="post" action="/challenges/create">
-  <div class="form-group">
-    <label for="create-title" class="col-sm-2 control-label">Choose a title for your challenge</label>
-    <div class="col-sm-6">
-      <input type="text" class="form-control" id="create-title" name="title" placeholder="Challenge Title" value="<%= @challenge.title %>">
-    </div>
-  </div>
-  
-  <div class="form-group">
-    <label for="create-description" class="col-sm-2 control-label">Describe your challenge</label>
-    <div class="col-sm-6">
-    	<textarea id="create-description" name="description" type="text" class="form-control" rows="3" placeholder="Description" value="<%= @challenge.description %>"></textarea>
-    </div>
-  </div>
+  <h2 class="new">Create A Challenge</h2>
+  <form class="form-horizontal" method="post" action="/challenges/create">
+    <div class="form-group">
 
-  <div class="form-group">
-    <label for="input-wager" class="col-sm-2 control-label">Wager</label>
-    <div class="col-sm-6">
-      <input type="text" class="form-control" id="input-wager" name="wager" placeholder="Challenge Wager" value="<%= @challenge.wager %>">
+      <div class="col-sm-6">
+        <input type="text" class="form-control" id="create-title" name="title" placeholder="Challenge Title" value="<%= @challenge.title %>">
+      </div>
     </div>
-  </div>
 
-  <div class="form-group">
-    <label for="input-start-and-end-date" class="col-sm-2 control-label">Choose a Start and End date</label>
-    <div class="col-sm-6">
-      <input type="text" name="daterange" />
+    <div class="form-group">
+
+      <div class="col-sm-6">
+      	<textarea id="create-description" name="description" type="text" class="form-control" rows="3" placeholder="Description" value="<%= @challenge.description %>"></textarea>
+      </div>
     </div>
-  </div>
 
-  <div>
-    <label for="friends" class="col-sm-2 control-label">Invite Friends</label>
-    <select class="selectpicker" data-live-search="true" multiple title="Choose friends as judges..." name="voters[]">
-      <% User.all.each do |user| %>
-        <% unless user.id == current_user.id %>
-        <option data-tokens="<%= user.first_name %> <%= user.last_name %>" value="<%= user.id %>"><%= user.first_name %> <%= user.last_name %></option>
+    <div class="form-group">
+
+      <div class="col-sm-6">
+        <input type="text" class="form-control" id="input-wager" name="wager" placeholder="Challenge Wager" value="<%= @challenge.wager %>">
+      </div>
+    </div>
+
+    <div class="form-group">
+
+      <div class="col-sm-6">
+        <input class="button button-block" type="text" name="daterange"/>
+      </div>
+    </div>
+
+    <div>
+
+      <select id="friends" class="selectpicker" data-live-search="true" multiple title="Choose friends as judges..." name="voters[]">
+        <% User.all.each do |user| %>
+          <% unless user.id == current_user.id %>
+          <option data-tokens="<%= user.first_name %> <%= user.last_name %>" value="<%= user.id %>"><%= user.first_name %> <%= user.last_name %></option>
+          <% end %>
         <% end %>
-      <% end %>
-    </select>
+      </select>
 
-	<div class>
-    <button type="submit">Submit</button>
-  </div>
-</form>
+  	<div class>
+      <button class="button button-block"type="submit">Submit</button>
+    </div>
+  </form>
+</div>
