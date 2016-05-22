@@ -234,6 +234,7 @@ textarea {
 #map{
   display: flex;
   justify-content: flex-end;
+  color: black;
 }
 
 .button-block span {
