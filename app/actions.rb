@@ -206,7 +206,7 @@ end
 get '/challenges/:id' do
   @user = current_user
   @challenge = Challenge.find(params[:id])
-  @is_photo = File.exists?("./public/images/#{current_user.id}_proof_photo.jpg")
+  @is_photo = File.exists?("./public/images/#{@challenge.id}_proof_photo.jpg")
   @is_creator = Challenge.where("user_id = ?", current_user).exists?
   @is_voter = Voter.where('challenge_id = ? AND user_id = ?',@challenge.id, current_user.id).exists?
   @has_not_voted = Voter.where('challenge_id = ? AND user_id = ? AND vote = ?',@challenge.id, current_user.id, nil).exists?
@@ -221,12 +221,12 @@ end
 post '/challenges/:id' do
   @user = current_user
   @challenge = Challenge.find(params[:id])
-  @filename = "#{@user.id}_proof_photo.jpg"
+  @filename = "#{@challenge.id}_proof_photo.jpg"
   file = params[:file][:tempfile]
   File.open("./public/images/#{@filename}", 'wb') do |f|
     f.write(file.read)
   end
-  erb :'/challenges/profile'
+  redirect "/challenges/#{params[:id]}"
 end
 # STRETCH: creators can edit challenge
 
