@@ -227,17 +227,29 @@ post '/challenges/:id' do
   @user = current_user
   @challenge = Challenge.find(params[:id])
   current_voter = Voter.where('user_id = ? AND challenge_id = ?',current_user.id, @challenge.id)
-  binding.pry
-  if params[:vote_pass]
-    current_user.vote = true
-  elsif params[:vote_fail]
-    current_user.vote = false
-  end
+  # binding.pry
+  # if params[:vote_pass]
+  #   current_user.vote = true
+  # elsif params[:vote_fail]
+  #   current_user.vote = false
+  # end
   @filename = "#{@challenge.id}_proof_photo.jpg"
   file = params[:file][:tempfile]
   File.open("./public/images/#{@filename}", 'wb') do |f|
     f.write(file.read)
   end
+  redirect "/challenges/#{params[:id]}"
+end
+
+post '/challenges/vote' do
+  binding.pry
+  @voter = Voter.where('challenge_id = ? AND user_id = ?', @challenge.id, current_user.id)
+  if params[:vote_pass]
+    @voter.vote = true
+  elsif params[:vote_fail]
+    @voter.vote = false
+  end
+  @voter.save
   redirect "/challenges/#{params[:id]}"
 end
 # STRETCH: creators can edit challenge
