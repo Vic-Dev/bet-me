@@ -1,53 +1,10 @@
-<<<<<<< HEAD
+
 body {
   margin: 0;
-  background: #c1bdba;
+  background: rgba(19, 35, 47, 0.9)
   color:#555;
-  font-family: sans-serif;
 }
 
-.challenge-box-page-header {
-	font-size: 24px;
-	background: #337ab7;
-	border-radius: 15px;
-	border: 2px solid black;
-	color:white;
-	width: 700px;
-  height: 250px;
-  margin: 2%;
-}
-
-.main_header{
-	font-size:48px;
-	text-align: center;
-	clear:both;
-}
-
-.body_header{
-	font-size:28px;
-}
-
-.stat_body{
-	font-size:20px;
-}
-
-.wager_header {
-	float:right;
-	font-size:60px;
-}
-
-.time_header {
-	float:right;
-}
-
-button {
-	border: 2px solid white;
-	background-color: transparent;
-}
-
-.text-muted {
-	font-size: 35px;
-=======
 /**
 
   Sick log in css
@@ -61,11 +18,6 @@ button {
 
 html {
   overflow-y: scroll;
-}
-
-body {
-  background: #c1bdba;
-  font-family: 'Titillium Web', sans-serif;
 }
 
 a {
@@ -302,5 +254,44 @@ textarea {
   height: 400px;
   width: 400px;
   object-fit: cover;
->>>>>>> sandys_changes
+}
+
+.challenge-box-page-header {
+  background: #1ab188;
+  border-radius: 5px;
+  color:white;
+  width: 700px;
+  height: 250px;
+  margin: 2%;
+  font-size:16px;
+}
+
+.challenge-title {
+  font-size:35px;
+  text-align: center;
+  clear:both;
+}
+
+
+.stat_body{
+  font-size:20px;
+}
+
+.wager-header {
+  float:right;
+  font-size:45px;
+  border:1px solid white;
+}
+
+.time-header {
+  float:right;
+}
+
+button {
+  border: 2px solid white;
+  background-color: transparent;
+}
+
+.text-muted {
+  font-size: 35px;
 }
