@@ -207,25 +207,26 @@ get '/challenges/:id' do
   @user = current_user
   @challenge = Challenge.find(params[:id])
   @is_photo = File.exists?("./public/images/#{current_user.id}_proof_photo.jpg")
-  @is_voter = Voter.where(challenge_id: @challenge.id, user_id: current_user.id)[0].nil? ? false : true
-  @has_not_voted = Voter.where(challenge_id: @challenge.id, user_id: current_user.id, vote: nil)[0].nil? ? false : true
-  @is_judgeday = Time.current > @challenge.end_time && @challenge.user_id == current_user.id 
-
+  @is_creator = Challenge.where("user_id = ?", current_user).exists?
+  @is_voter = Voter.where('challenge_id = ? AND user_id = ?',@challenge.id, current_user.id).exists?
+  @has_not_voted = Voter.where('challenge_id = ? AND user_id = ? AND vote = ?',@challenge.id, current_user.id, nil).exists?
+  @is_judgeday = Time.current > @challenge.end_time && @challenge.user_id == current_user.id
   @total_voters = Voter.where(challenge_id: @challenge.id).count
   @true_votes = Voter.where('challenge_id = ? AND vote = ?', @challenge.id, true).count
   @failed_votes = Voter.where('challenge_id = ? AND vote = ?', @challenge.id, false).count
-
-
   @post_vote_result = (@true_votes >= @total_voters/2) ? true : false
   erb :'challenges/profile'
 end
 
-post '/challenge/save_proof' do
+post '/challenges/:id' do
+  @user = current_user
+  @challenge = Challenge.find(params[:id])
   @filename = "#{@user.id}_proof_photo.jpg"
   file = params[:file][:tempfile]
   File.open("./public/images/#{@filename}", 'wb') do |f|
     f.write(file.read)
   end
+  erb :'/challenges/profile'
 end
 # STRETCH: creators can edit challenge
 
