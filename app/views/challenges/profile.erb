@@ -2,8 +2,8 @@
   <div>
     <h1><%= @challenge.title %></h1>
     <div>
-      <h3>Created by: <%= Challenge.find(params[:id]).user.first_name + ' ' + Challenge.find(params[:id]).user.last_name[0] %></h3>
-      <%= erb :'partials/_user_profile_photo' %>
+      <h3>Created by: <%= @challenge.user.first_name + ' ' + @challenge.user.last_name[0] %></h3>
+      <img id="currentPhoto" src="/images/<%= @challenge.user.id %>_profile_photo.jpg" onerror="this.src='/images/defaults/default.jpg'" width="400" height="400"/>
     </div>
   </div>
   <div>
