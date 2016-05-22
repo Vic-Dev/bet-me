@@ -2,7 +2,7 @@
   <div class="header clearfix">
     <nav class="nav navbar">
     <h3 class="text-muted logo navbar-left">Bet Me</h3>
-      <ul class="nav nav-pills navbar-right">
+      <ul class="nav nav-pills navbar-right"> 
         <% if current_user %>
           <li role="presentation">
             <a href="/user/profile">Profile</a>
@@ -20,7 +20,6 @@
             <span>Hi <%= current_user.first_name %> <%= current_user.last_name[0] %>.!</span>
         <% end %>
       </ul>
-
     </nav>
   </div>
 </div>
