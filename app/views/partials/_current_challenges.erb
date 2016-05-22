@@ -4,12 +4,12 @@
          YYYY/MM/DD-->
     <%= challenge.title %>
     <br>
-    <a href="/user/profile/<%= challenge.user_id %>">Created by: <%= challenge.user.first_name + ' ' + challenge.user.last_name %></a>
+    Created by: <a href="/user/profile/<%= challenge.user_id %>"><%= challenge.user.first_name + ' ' + challenge.user.last_name %></a>
     <br>
     $<%= '%.2f' % challenge.wager %>
     <br>
     <a href="/challenges/<%= challenge.id %>">Click for details</a>
     <br>
-    <% challenge.end_time - challenge.start_time %>
+    Time Left: <%= challenge.end_time - Time.current <= 0 ? 0 : Time.at(challenge.end_time - Time.current).utc.strftime("%Hh %Mm %Ss") %>
   </div>
 <% end %>
