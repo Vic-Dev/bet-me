@@ -16,7 +16,7 @@
         <h1>It's Judgment Day!</h1>
         <% if @is_photo %>
           <img id="proof_photo" src="/images/<%= @challenge.id %>_proof_photo.jpg">
-        <% elsif @is_creator %>
+        <% elsif @is_creator && current_user.id == @challenge.user_id %>
           <h1>Upload a photo for proof!</h1>
           <form id='proof_image_form' action="<% @challenge.id %>" method="post" enctype="multipart/form-data">
             <input id='proof_image_input' type="file" name="file">

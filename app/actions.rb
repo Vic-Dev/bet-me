@@ -207,7 +207,7 @@ get '/challenges/:id' do
   @user = current_user
   @challenge = Challenge.find(params[:id])
   @is_photo = File.exists?("./public/images/#{@challenge.id}_proof_photo.jpg")
-  @is_creator = Challenge.where("user_id = ?", @challenge.user_id).exists?
+  @is_creator = Challenge.where("user_id = ?", current_user).exists?
   @is_voter = Voter.where('challenge_id = ? AND user_id = ?',@challenge.id, current_user.id).exists?
   @has_not_voted = Voter.where('challenge_id = ? AND user_id = ? AND vote = ?',@challenge.id, current_user.id, nil).exists?
   @is_judgeday = Time.current > @challenge.end_time
@@ -228,7 +228,6 @@ post '/challenges/:id' do
   end
   redirect "/challenges/#{params[:id]}"
 end
-
 # STRETCH: creators can edit challenge
 
 # get '/challenges/:id/edit' do
