@@ -33,7 +33,9 @@
     <label for="friends" class="col-sm-2 control-label">Invite Friends</label>
     <select class="selectpicker" data-live-search="true" multiple title="Choose friends as judges..." name="voters[]">
       <% User.all.each do |user| %>
+        <% unless user.id == current_user.id %>
         <option data-tokens="<%= user.first_name %> <%= user.last_name %>" value="<%= user.id %>"><%= user.first_name %> <%= user.last_name %></option>
+        <% end %>
       <% end %>
     </select>
 
