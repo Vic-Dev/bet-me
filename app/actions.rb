@@ -150,7 +150,7 @@ get '/user/profile/:id' do
   @all_challenges_created = Challenge.where(user_id: params[:id])
   @successful_challenges = @all_challenges_created.where(successful: true).count
   @unsuccesful_challenges = @all_challenges_created.where(successful: false).count
-  @current_challenges_creator = Challenge.where(user_id: params[:id])
+  @current_challenges_creator = @current_challenges.where(user_id: params[:id])
   @expired_challenges_creator = @expired_challenges.where(user_id: params[:id])
   
   # All current challenges for current user as voter:
@@ -169,7 +169,6 @@ get '/user/profile/:id' do
     end
   end
 
-  binding.pry
   @user = User.find(params[:id])
   @challenges = @user.challenges.order(end_time: :desc)
   erb :'user/profile'
