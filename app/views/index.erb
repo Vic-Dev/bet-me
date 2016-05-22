@@ -1,2 +1,30 @@
-<%= erb :'partials/_sign_up' %>
+
 <%= erb :'partials/_log_in' %>
+
+
+
+<footer class="footer">
+  <div class="bottom-footer">
+    <div class="office">
+    <h4>Offices</h4>
+      <p>
+        <strong>Toronto</strong><br>
+        46 Spadina Ave - 4th Floor <br>
+        Toronto, ON M5V 2H8 <br>
+        <!-- t: 604-377-4212<br> -->
+        e: <a href="mailto:Betme@gmail.com" class="link-blue">Betme@gmail.com</a>
+      </p>
+      <p>
+        <strong>Dev team</strong><br>
+        Senior Backend developer : Gregory Markou<br>
+        Senior Backend developer: Victoria Johns<br>
+        Senior Frontend developer: Sandy Grewal<br>
+        Senior Frontend developer: Miguel Magsino<br>
+      </p>
+    </div>
+    <div id="map">
+      <script src='https://maps.googleapis.com/maps/api/js?v=3.exp'></script><div style='overflow:hidden;height:300px;width:350px;'><div id='gmap_canvas' style='height:300px;width:350px;'></div><div><small><a href="http://embedgooglemaps.com">									embed google maps							</a></small></div><div><small><a href="https://termsofusegenerator.net">terms of use generator</a></small></div><style>#gmap_canvas img{max-width:none!important;background:none!important}</style></div><script type='text/javascript'>function init_map(){var myOptions = {zoom:10,center:new google.maps.LatLng(43.6446447,-79.39499869999997),mapTypeId: google.maps.MapTypeId.ROADMAP};map = new google.maps.Map(document.getElementById('gmap_canvas'), myOptions);marker = new google.maps.Marker({map: map,position: new google.maps.LatLng(43.6446447,-79.39499869999997)});infowindow = new google.maps.InfoWindow({content:'<strong>Bet me inc.</strong><br>Toronto, 46 Spadina<br>'});google.maps.event.addListener(marker, 'click', function(){infowindow.open(map,marker);});infowindow.open(map,marker);}google.maps.event.addDomListener(window, 'load', init_map);</script>
+    </div>
+  </div>
+  </div>
+</footer>
