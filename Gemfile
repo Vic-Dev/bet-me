@@ -16,6 +16,7 @@ gem 'bcrypt'
 gem 'faker'
 
 group :development, :test do
+  gem 'pg'
   gem 'pry'
   gem 'shotgun'
   gem 'sqlite3'
