@@ -7,7 +7,7 @@ Sinatra
 2. `bundle exec rake db:drop`
 2. `bundle exec rake db:create`
 3. `bundle exec rake db:migrate`
-**** DO NOT DO THIS STEP 4. `bundle exec rake db:seed`
+4. `bundle exec rake db:seed`
 5. `bundle exec shotgun -p 3000 -o 0.0.0.0`
 6. Visit `http://localhost:3000/` in your browser
 
