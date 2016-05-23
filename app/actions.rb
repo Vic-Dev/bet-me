@@ -3,7 +3,6 @@ require_relative('./actions/profile')
 require_relative('./actions/challenges')
 
 # Homepage (Root path)
-require 'pry'
 
 enable :sessions
 
