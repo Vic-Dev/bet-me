@@ -16,9 +16,11 @@ gem 'tux'
 gem 'bcrypt'
 
 gem 'faker'
+group :production do
+  gem 'pg'
+end
 
 group :development, :test do
-  gem 'pg'
   gem 'pry'
   gem 'shotgun'
   gem 'sqlite3'
