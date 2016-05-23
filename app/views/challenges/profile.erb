@@ -26,7 +26,7 @@
           <h1>It's Judgment Day!</h1>
           <% if @is_photo %>
           <div class="text-center">
-            <img id="proof_photo" src="/images/<%= @challenge.id %>_proof_photo.jpg">
+            <img id="proof_photo" src="/images/<%= @challenge.id %>_proof_photo.jpg" width="400" height="400">
           </div>
           <% elsif @is_creator && current_user.id == @challenge.user_id %>
           <h1>Upload a photo for proof!</h1>

@@ -322,7 +322,7 @@ textarea {
 .challenge-box {
   background: #1ab188;
   width: 80%;
-  border-radius: 100px;
+  border-radius: 50px;
   margin-left: 10%;
   margin-right: 10%;
   padding: 10px;
@@ -354,6 +354,7 @@ textarea {
 .challenge-body-left {
   float: left;
   display: inline-block;
+  color: white;
 }
 
 .challenge-bottom {
@@ -400,4 +401,10 @@ textarea {
 
 .vote-buttons {
   padding-top: 2%;
+}
+
+#proof_photo {
+  height: 400px;
+  width: 400px;
+  object-fit: cover;
 }
