@@ -16,6 +16,7 @@ html {
 body {
   background: rgba(19, 35, 47, 0.9);
   font-family: 'Titillium Web', sans-serif;
+  font-size: 16px;
 }
 
 a {
@@ -33,7 +34,7 @@ a:hover {
   padding: 40px;
   max-width: 400px;
   max-height: 600px;
-  margin: 30px auto;
+  margin: 30px;
   border-radius: 4px;
   box-shadow: 0 4px 10px 4px rgba(19, 35, 47, 0.3);
   float: right;
@@ -179,7 +180,11 @@ textarea {
 
 .button-block {
   display: block;
-  width: 100%;
+  width: 320px;
+  height: 58px;
+  margin-bottom: 10px;
+  text-align: center;
+  cursor:pointer;
 }
 
 .forgot {
